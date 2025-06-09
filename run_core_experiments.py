@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 """
-Run core experiments - essential experiments for thesis.
-Focused set of 9 experiments instead of 12 for faster completion.
+Run core experiments
 """
 
 import subprocess
@@ -118,20 +117,9 @@ def main():
         # 10-11. Hyperparameter ablation
         ("ablation_margin_01", "margin_01"),
         ("ablation_margin_05", "margin_05"),
-        
-        # 12. Best combination
-        ("best_combination", "best_combination"),
     ]
     
     print(f"📊 Core experiments: {len(experiments)}")
-    print(f"🎯 Expected time: {len(experiments) * 4:.0f} hours")
-    print("\n🔬 Research coverage (zgodnie z tematem pracy):")
-    print("✓ Różne architektury ekstrakcji cech (ResNet50, DenseNet121, OSNet)")
-    print("✓ Różne funkcje straty - kontrastywna/syjamska (Triplet, Contrastive)")
-    print("✓ Różne podejścia do informatywnych przykładów (Random, Hard mining, Advanced)")
-    print("✓ Hyperparameter sensitivity analysis")
-    print("✓ Baseline vs Optimized approaches")
-    print("✓ Best practice combination")
     
     # Start experiments
     completed = 0
