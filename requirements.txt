@@ -1,0 +1,36 @@
+# Core dependencies
+numpy>=1.21.0
+Cython>=0.29.0
+
+# Build dependencies
+setuptools>=40.0.0
+wheel>=0.30.0
+
+# Data processing
+h5py>=3.0.0
+Pillow>=8.0.0
+six>=1.15.0
+scipy>=1.7.0
+opencv-python>=4.5.0
+imageio>=2.9.0
+
+# Visualization
+matplotlib>=3.3.0
+
+# Configuration
+yacs>=0.1.8
+
+# Utilities
+gdown>=4.0.0
+future>=0.18.0
+
+# SoccerNet dataset
+soccernet>=0.1.25
+
+# Development tools (optional)
+flake8>=4.0.0
+yapf>=0.31.0
+isort>=5.9.0
+
+# Logging (replaced tb-nightly with stable tensorboard)
+tensorboard>=2.8.0

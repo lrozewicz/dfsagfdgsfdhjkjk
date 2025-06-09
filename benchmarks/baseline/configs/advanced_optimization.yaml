@@ -1,0 +1,46 @@
+# Advanced optimization - aiming for higher performance
+# Incorporates multiple SOTA techniques within current constraints
+
+model:
+  name: 'osnet_x1_0'
+
+data:
+  type: 'image'
+  root: 'datasets'
+  height: 384  # Larger input resolution
+  width: 192   # Better aspect ratio
+  workers: 8
+  # Advanced augmentations (removed potentially unsupported random_patch)
+  transforms: ['random_flip', 'random_crop', 'color_jitter', 'random_erase']
+  sources: ['soccernetv3']
+  targets: ['soccernetv3', 'soccernetv3_test', 'soccernetv3_challenge']
+
+soccernetv3:
+  training_subset: 0.01
+
+sampler:
+  train_sampler: RandomIdentitySampler
+  train_sampler_t: RandomIdentitySampler
+  num_instances: 4
+
+loss:
+  name: 'triplet'
+  softmax:
+    label_smooth: True
+  triplet:
+    margin: 0.3
+    weight_t: 0.8  # Higher metric learning weight
+    weight_x: 0.2  # Lower classification weight
+
+train:
+  batch_size: 64   # Smaller batch for better gradient estimates
+  print_freq: 10
+  max_epoch: 60
+  lr: 0.00035
+  weight_decay: 5e-4
+
+test:
+  ranks: [1, 5, 10, 20]
+  export_ranking_results: True
+  eval_freq: 5
+  normalize_feature: True  # L2 normalization

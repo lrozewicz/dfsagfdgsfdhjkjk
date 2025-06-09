@@ -1,0 +1,53 @@
+# Optimized experiment configuration
+# Addresses multiple issues found in current experiments:
+# 1. Better data augmentation 
+# 2. Lower learning rate for better fine-tuning
+# 3. Hard triplet mining with larger margin
+# 4. Cosine annealing scheduler
+# 5. More balanced loss weights
+
+model:
+  name: 'osnet_x1_0'  # SOTA architecture
+
+data:
+  type: 'image'
+  root: 'datasets'
+  height: 256
+  width: 128
+  workers: 8
+  # Enhanced augmentations for better generalization
+  transforms: ['random_flip', 'random_crop', 'random_erase', 'color_jitter']
+  sources: ['soccernetv3']
+  targets: ['soccernetv3', 'soccernetv3_test', 'soccernetv3_challenge']
+
+soccernetv3:
+  training_subset: 0.01
+
+sampler:
+  train_sampler: RandomIdentitySampler
+  train_sampler_t: RandomIdentitySampler
+  num_instances: 6  # Balanced sampling (between 4 and 8)
+
+loss:
+  name: 'triplet'
+  softmax:
+    label_smooth: True
+  triplet:
+    margin: 0.5  # Larger margin for harder triplets
+    weight_t: 0.7  # Higher triplet weight
+    weight_x: 0.3  # Lower softmax weight
+
+train:
+  batch_size: 128
+  print_freq: 10
+  max_epoch: 60
+  lr: 0.00035  # Lower LR for better fine-tuning
+  weight_decay: 5e-4
+  # Add cosine annealing scheduler
+  lr_scheduler: 'cosine'
+  stepsize: [20, 40]  # Decay steps if needed
+
+test:
+  ranks: [1, 5, 10, 20]
+  export_ranking_results: True
+  eval_freq: 10

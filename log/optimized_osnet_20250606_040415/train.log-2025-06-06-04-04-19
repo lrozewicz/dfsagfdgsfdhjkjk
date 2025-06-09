@@ -1,0 +1,869 @@
+Show configuration
+adam:
+  beta1: 0.9
+  beta2: 0.999
+cuhk03:
+  classic_split: False
+  labeled_images: False
+data:
+  combineall: False
+  eval_metric: soccernetv3
+  height: 256
+  k_tfm: 1
+  load_train_targets: False
+  norm_mean: [0.485, 0.456, 0.406]
+  norm_std: [0.229, 0.224, 0.225]
+  root: datasets
+  save_dir: log/optimized_osnet_20250606_040415
+  sources: ['soccernetv3']
+  split_id: 0
+  targets: ['soccernetv3', 'soccernetv3_test', 'soccernetv3_challenge']
+  transforms: ['random_flip', 'random_crop', 'random_erase', 'color_jitter']
+  type: image
+  width: 128
+  workers: 8
+loss:
+  name: triplet
+  softmax:
+    label_smooth: True
+  triplet:
+    margin: 0.5
+    weight_t: 0.7
+    weight_x: 0.3
+market1501:
+  use_500k_distractors: False
+model:
+  load_weights: 
+  name: osnet_x1_0
+  pretrained: True
+  resume: 
+rmsprop:
+  alpha: 0.99
+sampler:
+  num_cams: 1
+  num_datasets: 1
+  num_instances: 6
+  train_sampler: RandomIdentitySampler
+  train_sampler_t: RandomIdentitySampler
+sgd:
+  dampening: 0.0
+  momentum: 0.9
+  nesterov: False
+soccernetv3:
+  training_subset: 0.01
+test:
+  batch_size: 100
+  dist_metric: euclidean
+  eval_freq: 10
+  evaluate: False
+  export_ranking_results: True
+  normalize_feature: False
+  ranks: [1, 5, 10, 20]
+  rerank: False
+  start_eval: 0
+  visrank: False
+  visrank_topk: 10
+train:
+  base_lr_mult: 0.1
+  batch_size: 128
+  fixbase_epoch: 0
+  gamma: 0.1
+  lr: 0.00035
+  lr_scheduler: cosine
+  max_epoch: 60
+  new_layers: ['classifier']
+  open_layers: ['classifier']
+  optim: adam
+  print_freq: 10
+  seed: 1
+  staged_lr: False
+  start_epoch: 0
+  stepsize: [20, 40]
+  weight_decay: 0.0005
+use_gpu: True
+video:
+  pooling_method: avg
+  sample_method: evenly
+  seq_len: 15
+
+Collecting env info ...
+** System info **
+PyTorch version: 2.6.0+cu124
+Is debug build: False
+CUDA used to build PyTorch: 12.4
+ROCM used to build PyTorch: N/A
+
+OS: Microsoft Windows 11 Pro (10.0.26100 64-bitowy)
+GCC version: Could not collect
+Clang version: Could not collect
+CMake version: Could not collect
+Libc version: N/A
+
+Python version: 3.11.7 (tags/v3.11.7:fa7a6f2, Dec  4 2023, 19:24:49) [MSC v.1937 64 bit (AMD64)] (64-bit runtime)
+Python platform: Windows-10-10.0.26100-SP0
+Is CUDA available: True
+CUDA runtime version: 12.4.131
+CUDA_MODULE_LOADING set to: LAZY
+GPU models and configuration: GPU 0: NVIDIA GeForce RTX 4070 Ti SUPER
+Nvidia driver version: 572.16
+cuDNN version: Could not collect
+HIP runtime version: N/A
+MIOpen runtime version: N/A
+Is XNNPACK available: True
+
+CPU:
+Name: AMD Ryzen 9 3900X 12-Core Processor            
+Manufacturer: AuthenticAMD
+Family: 107
+Architecture: 9
+ProcessorType: 3
+DeviceID: CPU0
+CurrentClockSpeed: 3793
+MaxClockSpeed: 3793
+L2CacheSize: 6144
+L2CacheSpeed: None
+Revision: 28928
+
+Versions of relevant libraries:
+[pip3] flake8==7.2.0
+[pip3] numpy==2.1.2
+[pip3] torch==2.6.0+cu124
+[pip3] torchaudio==2.6.0+cu124
+[pip3] torchreid==1.4.0
+[pip3] torchvision==0.21.0+cu124
+[conda] Could not collect
+        Pillow (11.0.0)
+
+Building train transforms ...
++ resize to 256x128
++ random flip
++ random crop (enlarge to 288x144 and crop 256x128)
++ color jitter
++ to torch tensor of range [0, 1]
++ normalization (mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
++ random erase
+Building test transforms ...
++ resize to 256x128
++ to torch tensor of range [0, 1]
++ normalization (mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
+=> Loading train (source) dataset
+SoccerNet valid set was already downloaded and unzipped at C:\praca\lucaswebart\apps\2025\nauka\eksperymenty\praca-dyplomowa\soccer-maj2025\sn-reid-new\datasets\soccernetv3\reid\valid.
+SoccerNet train set was already downloaded and unzipped at C:\praca\lucaswebart\apps\2025\nauka\eksperymenty\praca-dyplomowa\soccer-maj2025\sn-reid-new\datasets\soccernetv3\reid\train.
+=> Loaded Soccernetv3
+  ----------------------------------------
+  subset   | # ids | # images | # cameras
+  ----------------------------------------
+  train    |  1569 |     2665 |        92
+  query    | 11638 |    11638 |      1751
+  gallery  | 29534 |    34355 |      1751
+  ----------------------------------------
+=> Loading test (target) dataset
+SoccerNet valid set was already downloaded and unzipped at C:\praca\lucaswebart\apps\2025\nauka\eksperymenty\praca-dyplomowa\soccer-maj2025\sn-reid-new\datasets\soccernetv3\reid\valid.
+SoccerNet train set was already downloaded and unzipped at C:\praca\lucaswebart\apps\2025\nauka\eksperymenty\praca-dyplomowa\soccer-maj2025\sn-reid-new\datasets\soccernetv3\reid\train.
+=> Loaded Soccernetv3
+  ----------------------------------------
+  subset   | # ids | # images | # cameras
+  ----------------------------------------
+  train    |  1569 |     2665 |        92
+  query    | 11638 |    11638 |      1751
+  gallery  | 29534 |    34355 |      1751
+  ----------------------------------------
+SoccerNet valid set was already downloaded and unzipped at C:\praca\lucaswebart\apps\2025\nauka\eksperymenty\praca-dyplomowa\soccer-maj2025\sn-reid-new\datasets\soccernetv3\reid\valid.
+SoccerNet train set was already downloaded and unzipped at C:\praca\lucaswebart\apps\2025\nauka\eksperymenty\praca-dyplomowa\soccer-maj2025\sn-reid-new\datasets\soccernetv3\reid\train.
+SoccerNet test set was already downloaded and unzipped at C:\praca\lucaswebart\apps\2025\nauka\eksperymenty\praca-dyplomowa\soccer-maj2025\sn-reid-new\datasets\soccernetv3\reid\test.
+=> Loaded Soccernetv3Test
+  ----------------------------------------
+  subset   | # ids | # images | # cameras
+  ----------------------------------------
+  train    |     0 |        0 |         0
+  query    | 11777 |    11777 |      1715
+  gallery  | 30059 |    34989 |      1715
+  ----------------------------------------
+SoccerNet test set was already downloaded and unzipped at C:\praca\lucaswebart\apps\2025\nauka\eksperymenty\praca-dyplomowa\soccer-maj2025\sn-reid-new\datasets\soccernetv3\reid\test.
+SoccerNet challenge set was already downloaded and unzipped at C:\praca\lucaswebart\apps\2025\nauka\eksperymenty\praca-dyplomowa\soccer-maj2025\sn-reid-new\datasets\soccernetv3\reid\challenge.
+=> Loaded Soccernetv3Challenge
+  ----------------------------------------
+  subset   | # ids | # images | # cameras
+  ----------------------------------------
+  train    |     0 |        0 |         0
+  query    |  9021 |     9021 |      1310
+  gallery  | 26082 |    26082 |      1310
+  ----------------------------------------
+SoccerNet challenge set was already downloaded and unzipped at C:\praca\lucaswebart\apps\2025\nauka\eksperymenty\praca-dyplomowa\soccer-maj2025\sn-reid-new\datasets\soccernetv3\reid\challenge.
+
+
+  **************** Summary ****************
+  source            : ['soccernetv3']
+  # source datasets : 1
+  # source ids      : 1569
+  # source images   : 2665
+  # source cameras  : 92
+  target            : ['soccernetv3', 'soccernetv3_test', 'soccernetv3_challenge']
+  *****************************************
+
+
+Building model: osnet_x1_0
+Successfully loaded imagenet pretrained weights from "C:\Users\PC COMPUTER/.cache\torch\checkpoints\osnet_x1_0_imagenet.pth"
+** The following layers are discarded due to unmatched keys or layer size: ['classifier.weight', 'classifier.bias']
+Model complexity: params=2,193,616 flops=978,878,352
+Building triplet-engine for image-reid
+=> Start training
+epoch: [1/60][10/73]	time 0.397 (3.743)	data 0.000 (3.075)	eta 4:32:37	loss_t 2.0328 (3.1196)	loss_x 7.4725 (7.4196)	acc 0.0000 (0.0000)	lr 0.000350
+epoch: [1/60][20/73]	time 0.351 (2.055)	data 0.000 (1.537)	eta 2:29:20	loss_t 2.0430 (2.5871)	loss_x 7.7877 (7.5234)	acc 0.0000 (0.0000)	lr 0.000350
+epoch: [1/60][30/73]	time 0.378 (1.491)	data 0.001 (1.025)	eta 1:48:05	loss_t 2.2269 (2.2817)	loss_x 8.0298 (7.6630)	acc 0.0000 (0.0000)	lr 0.000350
+epoch: [1/60][40/73]	time 0.372 (1.210)	data 0.000 (0.769)	eta 1:27:32	loss_t 1.4549 (2.1358)	loss_x 8.2760 (7.7989)	acc 0.0000 (0.0000)	lr 0.000350
+epoch: [1/60][50/73]	time 0.359 (1.041)	data 0.000 (0.615)	eta 1:15:06	loss_t 1.6314 (1.9971)	loss_x 8.4391 (7.9127)	acc 0.0000 (0.0000)	lr 0.000350
+epoch: [1/60][60/73]	time 0.354 (0.928)	data 0.002 (0.513)	eta 1:06:49	loss_t 0.9939 (1.8659)	loss_x 8.4256 (8.0001)	acc 0.0000 (0.0000)	lr 0.000350
+epoch: [1/60][70/73]	time 0.430 (0.848)	data 0.000 (0.439)	eta 1:00:54	loss_t 0.8412 (1.7758)	loss_x 8.4842 (8.0656)	acc 0.0000 (0.0000)	lr 0.000350
+epoch: [2/60][10/73]	time 0.352 (3.462)	data 0.000 (3.075)	eta 4:07:56	loss_t 1.3718 (1.2290)	loss_x 6.7476 (6.8512)	acc 7.8125 (10.0781)	lr 0.000350
+epoch: [2/60][20/73]	time 0.376 (1.915)	data 0.000 (1.538)	eta 2:16:50	loss_t 1.0650 (1.0328)	loss_x 6.5884 (6.8176)	acc 6.2500 (7.5781)	lr 0.000350
+epoch: [2/60][30/73]	time 0.380 (1.401)	data 0.000 (1.025)	eta 1:39:51	loss_t 0.9518 (1.0443)	loss_x 6.6770 (6.8131)	acc 3.9062 (5.7552)	lr 0.000350
+epoch: [2/60][40/73]	time 0.345 (1.143)	data 0.000 (0.769)	eta 1:21:17	loss_t 0.8706 (1.0492)	loss_x 6.5165 (6.7762)	acc 6.2500 (5.2344)	lr 0.000350
+epoch: [2/60][50/73]	time 0.372 (0.988)	data 0.000 (0.615)	eta 1:10:07	loss_t 0.8938 (1.0244)	loss_x 6.8757 (6.7768)	acc 2.3438 (4.5312)	lr 0.000350
+epoch: [2/60][60/73]	time 0.377 (0.885)	data 0.000 (0.513)	eta 1:02:38	loss_t 1.4500 (1.0172)	loss_x 6.7546 (6.7601)	acc 0.7812 (4.1146)	lr 0.000350
+epoch: [2/60][70/73]	time 0.351 (0.810)	data 0.000 (0.440)	eta 0:57:13	loss_t 0.7373 (0.9967)	loss_x 6.6354 (6.7529)	acc 2.3438 (3.8951)	lr 0.000350
+epoch: [3/60][10/73]	time 0.365 (3.467)	data 0.000 (3.086)	eta 4:04:04	loss_t 1.0210 (0.7844)	loss_x 6.0820 (5.9675)	acc 27.3438 (27.5000)	lr 0.000349
+epoch: [3/60][20/73]	time 0.360 (1.916)	data 0.000 (1.543)	eta 2:14:35	loss_t 1.1946 (0.8463)	loss_x 6.1224 (6.0034)	acc 22.6562 (23.1250)	lr 0.000349
+epoch: [3/60][30/73]	time 0.359 (1.401)	data 0.000 (1.029)	eta 1:38:10	loss_t 0.6174 (0.8304)	loss_x 5.9684 (6.0054)	acc 9.3750 (20.5469)	lr 0.000349
+epoch: [3/60][40/73]	time 0.360 (1.144)	data 0.001 (0.772)	eta 1:19:59	loss_t 1.3969 (0.7877)	loss_x 6.0466 (5.9764)	acc 13.2812 (20.3125)	lr 0.000349
+epoch: [3/60][50/73]	time 0.380 (0.990)	data 0.000 (0.617)	eta 1:09:02	loss_t 0.8068 (0.7887)	loss_x 6.0017 (5.9714)	acc 11.7188 (19.3594)	lr 0.000349
+epoch: [3/60][60/73]	time 0.360 (0.887)	data 0.000 (0.514)	eta 1:01:42	loss_t 0.5428 (0.7672)	loss_x 5.6154 (5.9546)	acc 37.5000 (19.1536)	lr 0.000349
+epoch: [3/60][70/73]	time 0.356 (0.813)	data 0.000 (0.441)	eta 0:56:25	loss_t 0.2193 (0.7348)	loss_x 5.8354 (5.9491)	acc 21.0938 (18.7165)	lr 0.000349
+epoch: [4/60][10/73]	time 0.358 (3.484)	data 0.000 (3.090)	eta 4:01:00	loss_t 0.5719 (0.5532)	loss_x 5.2492 (5.3566)	acc 51.5625 (52.1875)	lr 0.000348
+epoch: [4/60][20/73]	time 0.378 (1.942)	data 0.000 (1.546)	eta 2:14:01	loss_t 0.6093 (0.5655)	loss_x 5.3745 (5.3164)	acc 48.4375 (51.7969)	lr 0.000348
+epoch: [4/60][30/73]	time 0.366 (1.418)	data 0.000 (1.031)	eta 1:37:39	loss_t 0.1138 (0.5643)	loss_x 5.3585 (5.3119)	acc 32.8125 (47.7083)	lr 0.000348
+epoch: [4/60][40/73]	time 0.389 (1.156)	data 0.000 (0.773)	eta 1:19:22	loss_t 0.8038 (0.5801)	loss_x 5.2750 (5.3138)	acc 34.3750 (45.0391)	lr 0.000348
+epoch: [4/60][50/73]	time 0.382 (0.998)	data 0.000 (0.619)	eta 1:08:23	loss_t 0.5485 (0.5992)	loss_x 5.3328 (5.3396)	acc 35.1562 (41.4219)	lr 0.000348
+epoch: [4/60][60/73]	time 0.361 (0.894)	data 0.001 (0.516)	eta 1:01:05	loss_t 0.3050 (0.6071)	loss_x 5.3658 (5.3489)	acc 25.0000 (39.6615)	lr 0.000348
+epoch: [4/60][70/73]	time 0.388 (0.818)	data 0.000 (0.442)	eta 0:55:48	loss_t 0.0862 (0.5976)	loss_x 5.3473 (5.3572)	acc 33.5938 (38.3817)	lr 0.000348
+epoch: [5/60][10/73]	time 0.382 (3.498)	data 0.000 (3.104)	eta 3:57:44	loss_t 0.2489 (0.4918)	loss_x 4.7553 (4.8722)	acc 79.6875 (69.3750)	lr 0.000346
+epoch: [5/60][20/73]	time 0.355 (1.932)	data 0.000 (1.552)	eta 2:10:58	loss_t 0.6274 (0.4419)	loss_x 4.7522 (4.8480)	acc 60.9375 (66.0938)	lr 0.000346
+epoch: [5/60][30/73]	time 0.365 (1.413)	data 0.000 (1.035)	eta 1:35:32	loss_t 0.7049 (0.4715)	loss_x 5.0010 (4.8591)	acc 48.4375 (62.6823)	lr 0.000346
+epoch: [5/60][40/73]	time 0.364 (1.152)	data 0.000 (0.776)	eta 1:17:45	loss_t 0.5528 (0.4667)	loss_x 4.8791 (4.8551)	acc 44.5312 (60.3711)	lr 0.000346
+epoch: [5/60][50/73]	time 0.429 (0.997)	data 0.000 (0.621)	eta 1:07:07	loss_t 0.2236 (0.4654)	loss_x 4.7996 (4.8655)	acc 57.8125 (57.8281)	lr 0.000346
+epoch: [5/60][60/73]	time 0.487 (0.894)	data 0.000 (0.518)	eta 1:00:02	loss_t 0.6162 (0.4768)	loss_x 4.8420 (4.8741)	acc 50.7812 (56.3802)	lr 0.000346
+epoch: [5/60][70/73]	time 0.362 (0.820)	data 0.000 (0.444)	eta 0:54:54	loss_t 0.5319 (0.4600)	loss_x 4.9532 (4.8805)	acc 47.6562 (55.4129)	lr 0.000346
+epoch: [6/60][10/73]	time 0.364 (3.472)	data 0.000 (3.088)	eta 3:51:43	loss_t 0.4214 (0.3403)	loss_x 4.6575 (4.4138)	acc 60.1562 (78.7500)	lr 0.000344
+epoch: [6/60][20/73]	time 0.363 (1.921)	data 0.000 (1.544)	eta 2:07:53	loss_t 0.1403 (0.3395)	loss_x 4.2494 (4.3957)	acc 78.1250 (77.9297)	lr 0.000344
+epoch: [6/60][30/73]	time 0.364 (1.402)	data 0.000 (1.030)	eta 1:33:06	loss_t 0.4691 (0.3542)	loss_x 4.3812 (4.3971)	acc 71.0938 (74.5833)	lr 0.000344
+epoch: [6/60][40/73]	time 0.367 (1.145)	data 0.000 (0.772)	eta 1:15:51	loss_t 0.3293 (0.3639)	loss_x 4.3113 (4.4021)	acc 77.3438 (72.9492)	lr 0.000344
+epoch: [6/60][50/73]	time 0.379 (0.990)	data 0.001 (0.618)	eta 1:05:27	loss_t 0.6867 (0.3810)	loss_x 4.6030 (4.4233)	acc 47.6562 (70.5781)	lr 0.000344
+epoch: [6/60][60/73]	time 0.363 (0.888)	data 0.000 (0.515)	eta 0:58:31	loss_t 0.3751 (0.3712)	loss_x 4.4477 (4.4304)	acc 66.4062 (69.3229)	lr 0.000344
+epoch: [6/60][70/73]	time 0.372 (0.813)	data 0.000 (0.441)	eta 0:53:29	loss_t 0.7663 (0.3976)	loss_x 4.7206 (4.4490)	acc 50.0000 (67.7232)	lr 0.000344
+epoch: [7/60][10/73]	time 0.375 (3.483)	data 0.001 (3.102)	eta 3:48:15	loss_t 0.2078 (0.3138)	loss_x 3.9041 (4.0084)	acc 92.1875 (84.2969)	lr 0.000341
+epoch: [7/60][20/73]	time 0.375 (1.930)	data 0.000 (1.551)	eta 2:06:08	loss_t 0.1191 (0.2781)	loss_x 3.9180 (3.9876)	acc 78.1250 (83.3594)	lr 0.000341
+epoch: [7/60][30/73]	time 0.380 (1.410)	data 0.000 (1.034)	eta 1:31:55	loss_t 0.1279 (0.2634)	loss_x 3.9825 (4.0171)	acc 75.0000 (80.0260)	lr 0.000341
+epoch: [7/60][40/73]	time 0.368 (1.152)	data 0.000 (0.775)	eta 1:14:53	loss_t 0.3582 (0.2802)	loss_x 4.1037 (4.0295)	acc 68.7500 (78.4570)	lr 0.000341
+epoch: [7/60][50/73]	time 0.363 (0.995)	data 0.000 (0.621)	eta 1:04:31	loss_t 0.3458 (0.2901)	loss_x 4.1398 (4.0408)	acc 73.4375 (77.4219)	lr 0.000341
+epoch: [7/60][60/73]	time 0.339 (0.890)	data 0.000 (0.517)	eta 0:57:33	loss_t 0.4488 (0.2991)	loss_x 4.2678 (4.0542)	acc 59.3750 (76.1979)	lr 0.000341
+epoch: [7/60][70/73]	time 0.354 (0.815)	data 0.000 (0.443)	eta 0:52:34	loss_t 0.3912 (0.3032)	loss_x 4.4336 (4.0699)	acc 57.8125 (75.0893)	lr 0.000341
+epoch: [8/60][10/73]	time 0.448 (3.498)	data 0.000 (3.095)	eta 3:44:58	loss_t 0.0539 (0.2499)	loss_x 3.4773 (3.6572)	acc 92.9688 (89.0625)	lr 0.000338
+epoch: [8/60][20/73]	time 0.361 (1.933)	data 0.000 (1.548)	eta 2:04:01	loss_t 0.3355 (0.2848)	loss_x 4.0079 (3.7101)	acc 74.2188 (86.0938)	lr 0.000338
+epoch: [8/60][30/73]	time 0.362 (1.411)	data 0.000 (1.032)	eta 1:30:15	loss_t 0.2469 (0.2752)	loss_x 3.5147 (3.7014)	acc 89.0625 (85.1042)	lr 0.000338
+epoch: [8/60][40/73]	time 0.371 (1.151)	data 0.002 (0.774)	eta 1:13:26	loss_t 0.2243 (0.2643)	loss_x 3.8714 (3.7097)	acc 70.3125 (83.1641)	lr 0.000338
+epoch: [8/60][50/73]	time 0.362 (0.996)	data 0.000 (0.619)	eta 1:03:23	loss_t 0.0241 (0.2473)	loss_x 3.6266 (3.7049)	acc 85.9375 (82.8594)	lr 0.000338
+epoch: [8/60][60/73]	time 0.360 (0.892)	data 0.000 (0.516)	eta 0:56:36	loss_t 0.1315 (0.2421)	loss_x 3.7313 (3.7128)	acc 78.9062 (81.9141)	lr 0.000338
+epoch: [8/60][70/73]	time 0.393 (0.817)	data 0.000 (0.442)	eta 0:51:43	loss_t 0.4766 (0.2642)	loss_x 3.8181 (3.7258)	acc 82.8125 (80.7812)	lr 0.000338
+epoch: [9/60][10/73]	time 0.362 (3.472)	data 0.000 (3.084)	eta 3:39:06	loss_t 0.1300 (0.1692)	loss_x 3.2804 (3.2260)	acc 89.0625 (90.7031)	lr 0.000335
+epoch: [9/60][20/73]	time 0.382 (1.922)	data 0.000 (1.542)	eta 2:00:58	loss_t 0.2802 (0.2050)	loss_x 3.3865 (3.2727)	acc 92.1875 (90.1562)	lr 0.000335
+epoch: [9/60][30/73]	time 0.360 (1.407)	data 0.000 (1.028)	eta 1:28:18	loss_t 0.0277 (0.2345)	loss_x 3.2637 (3.3285)	acc 91.4062 (88.2292)	lr 0.000335
+epoch: [9/60][40/73]	time 0.357 (1.147)	data 0.011 (0.772)	eta 1:11:49	loss_t 0.1200 (0.2345)	loss_x 3.4102 (3.3548)	acc 80.4688 (87.2852)	lr 0.000335
+epoch: [9/60][50/73]	time 0.372 (0.992)	data 0.000 (0.617)	eta 1:01:57	loss_t 0.1070 (0.2281)	loss_x 3.3178 (3.3511)	acc 85.9375 (86.9219)	lr 0.000335
+epoch: [9/60][60/73]	time 0.349 (0.887)	data 0.000 (0.514)	eta 0:55:15	loss_t 0.1253 (0.2234)	loss_x 3.4790 (3.3763)	acc 75.0000 (85.8464)	lr 0.000335
+epoch: [9/60][70/73]	time 0.364 (0.812)	data 0.000 (0.441)	eta 0:50:26	loss_t 0.2980 (0.2332)	loss_x 3.5505 (3.4082)	acc 85.9375 (84.8772)	lr 0.000335
+epoch: [10/60][10/73]	time 0.366 (3.485)	data 0.001 (3.091)	eta 3:35:38	loss_t 0.0658 (0.1301)	loss_x 2.9637 (3.0173)	acc 92.9688 (92.9688)	lr 0.000331
+epoch: [10/60][20/73]	time 0.416 (1.930)	data 0.000 (1.545)	eta 1:59:07	loss_t 0.0280 (0.1536)	loss_x 3.1809 (3.0613)	acc 88.2812 (91.4453)	lr 0.000331
+epoch: [10/60][30/73]	time 0.377 (1.409)	data 0.000 (1.030)	eta 1:26:44	loss_t 0.0644 (0.1674)	loss_x 3.1611 (3.0647)	acc 89.0625 (91.2760)	lr 0.000331
+epoch: [10/60][40/73]	time 0.346 (1.150)	data 0.000 (0.773)	eta 1:10:35	loss_t 0.0247 (0.1725)	loss_x 3.1097 (3.0790)	acc 92.1875 (91.1719)	lr 0.000331
+epoch: [10/60][50/73]	time 0.397 (0.995)	data 0.000 (0.618)	eta 1:00:53	loss_t 0.1731 (0.1703)	loss_x 3.3553 (3.0920)	acc 88.2812 (91.0156)	lr 0.000331
+epoch: [10/60][60/73]	time 0.364 (0.889)	data 0.000 (0.515)	eta 0:54:17	loss_t 0.3633 (0.1702)	loss_x 3.3946 (3.1119)	acc 81.2500 (90.2083)	lr 0.000331
+epoch: [10/60][70/73]	time 0.362 (0.814)	data 0.000 (0.442)	eta 0:49:34	loss_t 0.1499 (0.1715)	loss_x 3.2421 (3.1290)	acc 89.8438 (89.2857)	lr 0.000331
+##### Evaluating soccernetv3 (source) #####
+Extracting features from query set ...
+Done, obtained 11638-by-512 matrix
+Extracting features from gallery set ...
+Done, obtained 34355-by-512 matrix
+Speed: 0.0320 sec/batch
+Computing distance matrix with metric=euclidean ...
+Computing CMC and mAP ...
+** Results **
+mAP: 54.2%
+CMC curve
+Rank-1  : 42.7%
+Rank-5  : 0.0%
+Rank-10 : 0.0%
+Rank-20 : 0.0%
+##### Evaluating soccernetv3_test (target) #####
+Extracting features from query set ...
+Done, obtained 11777-by-512 matrix
+Extracting features from gallery set ...
+Done, obtained 34989-by-512 matrix
+Speed: 0.0297 sec/batch
+Computing distance matrix with metric=euclidean ...
+Computing CMC and mAP ...
+** Results **
+mAP: 53.4%
+CMC curve
+Rank-1  : 41.8%
+Rank-5  : 0.0%
+Rank-10 : 0.0%
+Rank-20 : 0.0%
+##### Evaluating soccernetv3_challenge (target) #####
+Extracting features from query set ...
+Done, obtained 9021-by-512 matrix
+Extracting features from gallery set ...
+Done, obtained 26082-by-512 matrix
+Speed: 0.0303 sec/batch
+Computing distance matrix with metric=euclidean ...
+Couldn't compute CMC and mAP because of hidden identity labels.
+Checkpoint saved to "log/optimized_osnet_20250606_040415\model\model.pth.tar-10"
+epoch: [11/60][10/73]	time 0.396 (3.474)	data 0.000 (3.069)	eta 3:30:45	loss_t 0.0821 (0.1346)	loss_x 2.7474 (2.8422)	acc 98.4375 (94.6875)	lr 0.000327
+epoch: [11/60][20/73]	time 0.369 (1.926)	data 0.000 (1.534)	eta 1:56:30	loss_t 0.0577 (0.1588)	loss_x 2.8417 (2.8153)	acc 93.7500 (94.3359)	lr 0.000327
+epoch: [11/60][30/73]	time 0.394 (1.410)	data 0.000 (1.023)	eta 1:25:02	loss_t 0.1472 (0.1566)	loss_x 2.7940 (2.8392)	acc 96.0938 (93.5417)	lr 0.000327
+epoch: [11/60][40/73]	time 0.381 (1.150)	data 0.000 (0.767)	eta 1:09:09	loss_t 0.0806 (0.1476)	loss_x 3.0428 (2.8610)	acc 86.7188 (92.5977)	lr 0.000327
+epoch: [11/60][50/73]	time 0.368 (0.993)	data 0.000 (0.614)	eta 0:59:35	loss_t 0.2872 (0.1698)	loss_x 2.8248 (2.8790)	acc 92.9688 (91.7812)	lr 0.000327
+epoch: [11/60][60/73]	time 0.354 (0.888)	data 0.000 (0.512)	eta 0:53:07	loss_t 0.2621 (0.1786)	loss_x 3.0928 (2.8977)	acc 82.0312 (91.1458)	lr 0.000327
+epoch: [11/60][70/73]	time 0.361 (0.813)	data 0.000 (0.439)	eta 0:48:31	loss_t 0.2046 (0.1830)	loss_x 3.0987 (2.9272)	acc 79.6875 (90.1228)	lr 0.000327
+epoch: [12/60][10/73]	time 0.368 (3.475)	data 0.000 (3.087)	eta 3:26:35	loss_t 0.1176 (0.1158)	loss_x 2.7544 (2.6220)	acc 92.9688 (95.5469)	lr 0.000322
+epoch: [12/60][20/73]	time 0.362 (1.921)	data 0.000 (1.544)	eta 1:53:51	loss_t 0.2228 (0.1206)	loss_x 2.6734 (2.6423)	acc 94.5312 (95.3906)	lr 0.000322
+epoch: [12/60][30/73]	time 0.382 (1.405)	data 0.008 (1.029)	eta 1:23:03	loss_t 0.0673 (0.0996)	loss_x 2.6361 (2.6546)	acc 94.5312 (94.9479)	lr 0.000322
+epoch: [12/60][40/73]	time 0.360 (1.146)	data 0.000 (0.772)	eta 1:07:32	loss_t 0.1182 (0.1146)	loss_x 2.8658 (2.6794)	acc 92.1875 (94.1797)	lr 0.000322
+epoch: [12/60][50/73]	time 0.395 (0.991)	data 0.000 (0.618)	eta 0:58:15	loss_t 0.0449 (0.1213)	loss_x 2.7598 (2.6833)	acc 92.9688 (93.8438)	lr 0.000322
+epoch: [12/60][60/73]	time 0.364 (0.888)	data 0.000 (0.515)	eta 0:52:03	loss_t 0.1505 (0.1277)	loss_x 2.7746 (2.7116)	acc 94.5312 (93.0990)	lr 0.000322
+epoch: [12/60][70/73]	time 0.362 (0.813)	data 0.000 (0.441)	eta 0:47:31	loss_t 0.0398 (0.1282)	loss_x 2.6993 (2.7292)	acc 95.3125 (92.5781)	lr 0.000322
+epoch: [13/60][10/73]	time 0.353 (3.495)	data 0.000 (3.096)	eta 3:23:32	loss_t 0.0201 (0.0767)	loss_x 2.2915 (2.4149)	acc 98.4375 (98.0469)	lr 0.000317
+epoch: [13/60][20/73]	time 0.381 (1.934)	data 0.000 (1.548)	eta 1:52:18	loss_t 0.0710 (0.0905)	loss_x 2.2183 (2.4413)	acc 97.6562 (97.4609)	lr 0.000317
+epoch: [13/60][30/73]	time 0.358 (1.411)	data 0.000 (1.032)	eta 1:21:43	loss_t 0.0000 (0.1153)	loss_x 2.1941 (2.4661)	acc 96.8750 (96.9271)	lr 0.000317
+epoch: [13/60][40/73]	time 0.365 (1.150)	data 0.000 (0.774)	eta 1:06:24	loss_t 0.1690 (0.1342)	loss_x 2.7909 (2.5045)	acc 92.1875 (96.0156)	lr 0.000317
+epoch: [13/60][50/73]	time 0.373 (0.994)	data 0.000 (0.620)	eta 0:57:13	loss_t 0.0494 (0.1369)	loss_x 2.6700 (2.5372)	acc 90.6250 (95.0625)	lr 0.000317
+epoch: [13/60][60/73]	time 0.381 (0.890)	data 0.000 (0.516)	eta 0:51:04	loss_t 0.0938 (0.1373)	loss_x 2.4088 (2.5458)	acc 98.4375 (94.9479)	lr 0.000317
+epoch: [13/60][70/73]	time 0.378 (0.815)	data 0.000 (0.443)	eta 0:46:37	loss_t 0.0736 (0.1305)	loss_x 2.6093 (2.5521)	acc 94.5312 (94.7321)	lr 0.000317
+epoch: [14/60][10/73]	time 0.381 (3.488)	data 0.000 (3.096)	eta 3:18:51	loss_t 0.0659 (0.0804)	loss_x 2.4988 (2.2915)	acc 95.3125 (96.8750)	lr 0.000311
+epoch: [14/60][20/73]	time 0.376 (1.928)	data 0.000 (1.548)	eta 1:49:36	loss_t 0.1277 (0.0730)	loss_x 2.3350 (2.3009)	acc 97.6562 (96.6797)	lr 0.000311
+epoch: [14/60][30/73]	time 0.374 (1.410)	data 0.000 (1.032)	eta 1:19:56	loss_t 0.1471 (0.0916)	loss_x 2.3708 (2.3217)	acc 96.0938 (96.7448)	lr 0.000311
+epoch: [14/60][40/73]	time 0.439 (1.155)	data 0.000 (0.774)	eta 1:05:15	loss_t 0.1440 (0.0913)	loss_x 2.4123 (2.3348)	acc 92.9688 (96.1719)	lr 0.000311
+epoch: [14/60][50/73]	time 0.387 (1.000)	data 0.002 (0.619)	eta 0:56:21	loss_t 0.0106 (0.0906)	loss_x 2.2923 (2.3462)	acc 97.6562 (96.0156)	lr 0.000311
+epoch: [14/60][60/73]	time 0.371 (0.895)	data 0.000 (0.516)	eta 0:50:16	loss_t 0.0865 (0.0957)	loss_x 2.5967 (2.3646)	acc 89.0625 (95.9375)	lr 0.000311
+epoch: [14/60][70/73]	time 0.347 (0.819)	data 0.000 (0.442)	eta 0:45:53	loss_t 0.1760 (0.0959)	loss_x 2.7937 (2.3860)	acc 88.2812 (95.5580)	lr 0.000311
+epoch: [15/60][10/73]	time 0.373 (3.483)	data 0.002 (3.101)	eta 3:14:20	loss_t 0.0224 (0.0782)	loss_x 2.1189 (2.1012)	acc 96.0938 (98.6719)	lr 0.000305
+epoch: [15/60][20/73]	time 0.369 (1.925)	data 0.000 (1.550)	eta 1:47:04	loss_t 0.1451 (0.0894)	loss_x 2.2843 (2.1583)	acc 96.8750 (98.6328)	lr 0.000305
+epoch: [15/60][30/73]	time 0.384 (1.407)	data 0.000 (1.034)	eta 1:18:03	loss_t 0.2244 (0.0908)	loss_x 2.1939 (2.1745)	acc 99.2188 (97.9427)	lr 0.000305
+epoch: [15/60][40/73]	time 0.390 (1.151)	data 0.000 (0.775)	eta 1:03:38	loss_t 0.0000 (0.0921)	loss_x 2.1480 (2.1932)	acc 97.6562 (97.7148)	lr 0.000305
+epoch: [15/60][50/73]	time 0.366 (0.995)	data 0.000 (0.620)	eta 0:54:51	loss_t 0.1264 (0.0985)	loss_x 2.3522 (2.2207)	acc 98.4375 (97.4688)	lr 0.000305
+epoch: [15/60][60/73]	time 0.359 (0.893)	data 0.000 (0.517)	eta 0:49:03	loss_t 0.0826 (0.0929)	loss_x 2.5486 (2.2444)	acc 89.8438 (96.9141)	lr 0.000305
+epoch: [15/60][70/73]	time 0.360 (0.817)	data 0.000 (0.443)	eta 0:44:46	loss_t 0.0994 (0.0954)	loss_x 2.4213 (2.2578)	acc 98.4375 (96.6295)	lr 0.000305
+epoch: [16/60][10/73]	time 0.361 (3.492)	data 0.000 (3.099)	eta 3:10:37	loss_t 0.0107 (0.0692)	loss_x 2.0375 (2.0369)	acc 100.0000 (98.6719)	lr 0.000299
+epoch: [16/60][20/73]	time 0.384 (1.934)	data 0.000 (1.550)	eta 1:45:14	loss_t 0.1886 (0.0897)	loss_x 2.2112 (2.0668)	acc 96.8750 (98.1641)	lr 0.000299
+epoch: [16/60][30/73]	time 0.370 (1.414)	data 0.000 (1.033)	eta 1:16:41	loss_t 0.0680 (0.0942)	loss_x 2.0622 (2.0871)	acc 97.6562 (97.8646)	lr 0.000299
+epoch: [16/60][40/73]	time 0.366 (1.155)	data 0.002 (0.775)	eta 1:02:26	loss_t 0.1162 (0.0887)	loss_x 2.0088 (2.0986)	acc 99.2188 (97.7734)	lr 0.000299
+epoch: [16/60][50/73]	time 0.374 (0.998)	data 0.000 (0.620)	eta 0:53:48	loss_t 0.0777 (0.0936)	loss_x 2.2516 (2.1225)	acc 93.7500 (97.5156)	lr 0.000299
+epoch: [16/60][60/73]	time 0.352 (0.894)	data 0.000 (0.517)	eta 0:48:03	loss_t 0.0000 (0.0939)	loss_x 2.1571 (2.1402)	acc 97.6562 (97.4219)	lr 0.000299
+epoch: [16/60][70/73]	time 0.370 (0.818)	data 0.000 (0.443)	eta 0:43:51	loss_t 0.1073 (0.0974)	loss_x 2.3292 (2.1625)	acc 95.3125 (97.2321)	lr 0.000299
+epoch: [17/60][10/73]	time 0.376 (3.510)	data 0.000 (3.119)	eta 3:07:17	loss_t 0.0739 (0.0410)	loss_x 1.9558 (1.9795)	acc 100.0000 (99.5312)	lr 0.000292
+epoch: [17/60][20/73]	time 0.369 (1.938)	data 0.001 (1.560)	eta 1:43:06	loss_t 0.0566 (0.0694)	loss_x 1.9960 (1.9842)	acc 98.4375 (99.0625)	lr 0.000292
+epoch: [17/60][30/73]	time 0.359 (1.418)	data 0.002 (1.040)	eta 1:15:10	loss_t 0.1359 (0.0759)	loss_x 1.9255 (1.9972)	acc 100.0000 (99.0365)	lr 0.000292
+epoch: [17/60][40/73]	time 0.362 (1.158)	data 0.002 (0.780)	eta 1:01:14	loss_t 0.0357 (0.0787)	loss_x 2.1374 (2.0251)	acc 94.5312 (98.4961)	lr 0.000292
+epoch: [17/60][50/73]	time 0.380 (1.001)	data 0.000 (0.624)	eta 0:52:44	loss_t 0.0552 (0.0743)	loss_x 2.0954 (2.0351)	acc 98.4375 (98.4375)	lr 0.000292
+epoch: [17/60][60/73]	time 0.370 (0.896)	data 0.000 (0.520)	eta 0:47:05	loss_t 0.0515 (0.0756)	loss_x 2.0173 (2.0524)	acc 97.6562 (98.1641)	lr 0.000292
+epoch: [17/60][70/73]	time 0.368 (0.820)	data 0.000 (0.446)	eta 0:42:57	loss_t 0.3695 (0.0807)	loss_x 2.1852 (2.0719)	acc 95.3125 (97.8348)	lr 0.000292
+epoch: [18/60][10/73]	time 0.353 (3.487)	data 0.000 (3.100)	eta 3:01:49	loss_t 0.2059 (0.0561)	loss_x 1.9767 (1.9087)	acc 98.4375 (98.9062)	lr 0.000285
+epoch: [18/60][20/73]	time 0.376 (1.931)	data 0.000 (1.550)	eta 1:40:22	loss_t 0.0421 (0.0686)	loss_x 1.9739 (1.9400)	acc 96.8750 (98.7500)	lr 0.000285
+epoch: [18/60][30/73]	time 0.368 (1.412)	data 0.002 (1.034)	eta 1:13:09	loss_t 0.0660 (0.0651)	loss_x 1.8190 (1.9367)	acc 99.2188 (98.7240)	lr 0.000285
+epoch: [18/60][40/73]	time 0.365 (1.151)	data 0.002 (0.776)	eta 0:59:27	loss_t 0.0171 (0.0594)	loss_x 2.0598 (1.9640)	acc 96.8750 (98.5938)	lr 0.000285
+epoch: [18/60][50/73]	time 0.390 (0.995)	data 0.000 (0.620)	eta 0:51:12	loss_t 0.1006 (0.0570)	loss_x 1.9406 (1.9663)	acc 100.0000 (98.5000)	lr 0.000285
+epoch: [18/60][60/73]	time 0.359 (0.890)	data 0.000 (0.517)	eta 0:45:40	loss_t 0.0661 (0.0546)	loss_x 2.2026 (1.9737)	acc 100.0000 (98.4766)	lr 0.000285
+epoch: [18/60][70/73]	time 0.363 (0.815)	data 0.000 (0.443)	eta 0:41:41	loss_t 0.0129 (0.0534)	loss_x 1.8967 (1.9867)	acc 96.8750 (98.2478)	lr 0.000285
+epoch: [19/60][10/73]	time 0.446 (3.557)	data 0.000 (3.133)	eta 3:01:09	loss_t 0.0360 (0.0499)	loss_x 1.7965 (1.8234)	acc 98.4375 (99.1406)	lr 0.000278
+epoch: [19/60][20/73]	time 0.383 (1.963)	data 0.000 (1.566)	eta 1:39:38	loss_t 0.0067 (0.0566)	loss_x 1.6206 (1.8087)	acc 100.0000 (99.2578)	lr 0.000278
+epoch: [19/60][30/73]	time 0.376 (1.434)	data 0.000 (1.044)	eta 1:12:33	loss_t 0.0616 (0.0598)	loss_x 1.8907 (1.8359)	acc 100.0000 (99.2448)	lr 0.000278
+epoch: [19/60][40/73]	time 0.364 (1.168)	data 0.000 (0.783)	eta 0:58:55	loss_t 0.0380 (0.0572)	loss_x 1.8899 (1.8544)	acc 99.2188 (99.0625)	lr 0.000278
+epoch: [19/60][50/73]	time 0.363 (1.010)	data 0.002 (0.627)	eta 0:50:45	loss_t 0.0634 (0.0585)	loss_x 1.9053 (1.8696)	acc 100.0000 (99.0625)	lr 0.000278
+epoch: [19/60][60/73]	time 0.364 (0.904)	data 0.000 (0.522)	eta 0:45:17	loss_t 0.0110 (0.0689)	loss_x 1.9934 (1.8978)	acc 95.3125 (98.8672)	lr 0.000278
+epoch: [19/60][70/73]	time 0.366 (0.827)	data 0.000 (0.448)	eta 0:41:18	loss_t 0.1954 (0.0678)	loss_x 2.0010 (1.9112)	acc 97.6562 (98.6384)	lr 0.000278
+epoch: [20/60][10/73]	time 0.353 (3.498)	data 0.001 (3.110)	eta 2:53:53	loss_t 0.0000 (0.0605)	loss_x 1.8019 (1.7872)	acc 100.0000 (99.6875)	lr 0.000270
+epoch: [20/60][20/73]	time 0.378 (1.937)	data 0.002 (1.555)	eta 1:35:58	loss_t 0.0403 (0.0578)	loss_x 1.7396 (1.7717)	acc 99.2188 (99.4922)	lr 0.000270
+epoch: [20/60][30/73]	time 0.393 (1.416)	data 0.005 (1.037)	eta 1:09:55	loss_t 0.1114 (0.0608)	loss_x 1.9760 (1.8053)	acc 100.0000 (99.4531)	lr 0.000270
+epoch: [20/60][40/73]	time 0.390 (1.155)	data 0.000 (0.778)	eta 0:56:49	loss_t 0.0175 (0.0581)	loss_x 1.8612 (1.8109)	acc 99.2188 (99.3359)	lr 0.000270
+epoch: [20/60][50/73]	time 0.371 (0.999)	data 0.000 (0.622)	eta 0:48:58	loss_t 0.0304 (0.0553)	loss_x 1.8615 (1.8190)	acc 100.0000 (99.2188)	lr 0.000270
+epoch: [20/60][60/73]	time 0.369 (0.894)	data 0.000 (0.519)	eta 0:43:41	loss_t 0.0108 (0.0632)	loss_x 2.0173 (1.8342)	acc 92.9688 (98.9583)	lr 0.000270
+epoch: [20/60][70/73]	time 0.353 (0.818)	data 0.001 (0.445)	eta 0:39:50	loss_t 0.0000 (0.0633)	loss_x 1.7381 (1.8487)	acc 100.0000 (98.8281)	lr 0.000270
+##### Evaluating soccernetv3 (source) #####
+Extracting features from query set ...
+Done, obtained 11638-by-512 matrix
+Extracting features from gallery set ...
+Done, obtained 34355-by-512 matrix
+Speed: 0.0285 sec/batch
+Computing distance matrix with metric=euclidean ...
+Computing CMC and mAP ...
+** Results **
+mAP: 54.2%
+CMC curve
+Rank-1  : 43.2%
+Rank-5  : 0.0%
+Rank-10 : 0.0%
+Rank-20 : 0.0%
+##### Evaluating soccernetv3_test (target) #####
+Extracting features from query set ...
+Done, obtained 11777-by-512 matrix
+Extracting features from gallery set ...
+Done, obtained 34989-by-512 matrix
+Speed: 0.0277 sec/batch
+Computing distance matrix with metric=euclidean ...
+Computing CMC and mAP ...
+** Results **
+mAP: 53.2%
+CMC curve
+Rank-1  : 42.2%
+Rank-5  : 0.0%
+Rank-10 : 0.0%
+Rank-20 : 0.0%
+##### Evaluating soccernetv3_challenge (target) #####
+Extracting features from query set ...
+Done, obtained 9021-by-512 matrix
+Extracting features from gallery set ...
+Done, obtained 26082-by-512 matrix
+Speed: 0.0283 sec/batch
+Computing distance matrix with metric=euclidean ...
+Couldn't compute CMC and mAP because of hidden identity labels.
+Checkpoint saved to "log/optimized_osnet_20250606_040415\model\model.pth.tar-20"
+epoch: [21/60][10/73]	time 0.367 (3.520)	data 0.000 (3.121)	eta 2:50:43	loss_t 0.0080 (0.0708)	loss_x 1.7245 (1.7379)	acc 100.0000 (99.5312)	lr 0.000262
+epoch: [21/60][20/73]	time 0.352 (1.943)	data 0.002 (1.561)	eta 1:33:56	loss_t 0.0728 (0.0476)	loss_x 1.8483 (1.7524)	acc 100.0000 (99.5312)	lr 0.000262
+epoch: [21/60][30/73]	time 0.390 (1.419)	data 0.000 (1.040)	eta 1:08:19	loss_t 0.0812 (0.0464)	loss_x 1.7480 (1.7716)	acc 99.2188 (99.2448)	lr 0.000262
+epoch: [21/60][40/73]	time 0.368 (1.157)	data 0.000 (0.781)	eta 0:55:32	loss_t 0.0052 (0.0441)	loss_x 1.7939 (1.7845)	acc 100.0000 (99.0430)	lr 0.000262
+epoch: [21/60][50/73]	time 0.373 (0.999)	data 0.000 (0.625)	eta 0:47:45	loss_t 0.0044 (0.0463)	loss_x 1.7289 (1.7954)	acc 98.4375 (98.9219)	lr 0.000262
+epoch: [21/60][60/73]	time 0.348 (0.894)	data 0.000 (0.521)	eta 0:42:35	loss_t 0.0937 (0.0481)	loss_x 1.8255 (1.7951)	acc 99.2188 (98.9323)	lr 0.000262
+epoch: [21/60][70/73]	time 0.361 (0.819)	data 0.000 (0.446)	eta 0:38:52	loss_t 0.0000 (0.0478)	loss_x 1.8539 (1.8046)	acc 97.6562 (98.8728)	lr 0.000262
+epoch: [22/60][10/73]	time 0.354 (3.492)	data 0.000 (3.100)	eta 2:45:07	loss_t 0.0373 (0.0370)	loss_x 1.7600 (1.6743)	acc 99.2188 (99.6875)	lr 0.000254
+epoch: [22/60][20/73]	time 0.382 (1.934)	data 0.002 (1.550)	eta 1:31:07	loss_t 0.0149 (0.0448)	loss_x 1.7693 (1.6971)	acc 99.2188 (99.5312)	lr 0.000254
+epoch: [22/60][30/73]	time 0.365 (1.412)	data 0.002 (1.034)	eta 1:06:18	loss_t 0.0107 (0.0421)	loss_x 1.6352 (1.7026)	acc 100.0000 (99.6094)	lr 0.000254
+epoch: [22/60][40/73]	time 0.361 (1.152)	data 0.001 (0.775)	eta 0:53:52	loss_t 0.0042 (0.0416)	loss_x 1.8014 (1.7151)	acc 99.2188 (99.5117)	lr 0.000254
+epoch: [22/60][50/73]	time 0.364 (0.995)	data 0.000 (0.620)	eta 0:46:23	loss_t 0.0113 (0.0371)	loss_x 1.7148 (1.7184)	acc 99.2188 (99.4062)	lr 0.000254
+epoch: [22/60][60/73]	time 0.376 (0.890)	data 0.000 (0.517)	eta 0:41:21	loss_t 0.0217 (0.0399)	loss_x 1.8137 (1.7380)	acc 100.0000 (99.2448)	lr 0.000254
+epoch: [22/60][70/73]	time 0.358 (0.816)	data 0.001 (0.443)	eta 0:37:46	loss_t 0.0678 (0.0416)	loss_x 1.7151 (1.7481)	acc 100.0000 (99.0848)	lr 0.000254
+epoch: [23/60][10/73]	time 0.370 (3.477)	data 0.000 (3.099)	eta 2:40:10	loss_t 0.0118 (0.0411)	loss_x 1.6104 (1.6397)	acc 100.0000 (99.8438)	lr 0.000246
+epoch: [23/60][20/73]	time 0.378 (1.927)	data 0.000 (1.550)	eta 1:28:27	loss_t 0.0722 (0.0462)	loss_x 1.6886 (1.6529)	acc 99.2188 (99.7656)	lr 0.000246
+epoch: [23/60][30/73]	time 0.371 (1.410)	data 0.000 (1.033)	eta 1:04:28	loss_t 0.0399 (0.0383)	loss_x 1.7132 (1.6600)	acc 100.0000 (99.5312)	lr 0.000246
+epoch: [23/60][40/73]	time 0.406 (1.151)	data 0.000 (0.775)	eta 0:52:26	loss_t 0.0000 (0.0337)	loss_x 1.7211 (1.6634)	acc 100.0000 (99.4727)	lr 0.000246
+epoch: [23/60][50/73]	time 0.367 (0.996)	data 0.000 (0.620)	eta 0:45:14	loss_t 0.0249 (0.0333)	loss_x 1.7832 (1.6740)	acc 100.0000 (99.4219)	lr 0.000246
+epoch: [23/60][60/73]	time 0.357 (0.892)	data 0.000 (0.517)	eta 0:40:20	loss_t 0.0092 (0.0327)	loss_x 1.8211 (1.6867)	acc 99.2188 (99.3620)	lr 0.000246
+epoch: [23/60][70/73]	time 0.362 (0.817)	data 0.000 (0.443)	eta 0:36:48	loss_t 0.0563 (0.0328)	loss_x 1.8470 (1.6963)	acc 99.2188 (99.3304)	lr 0.000246
+epoch: [24/60][10/73]	time 0.385 (3.518)	data 0.000 (3.123)	eta 2:37:46	loss_t 0.0275 (0.0529)	loss_x 1.6491 (1.5888)	acc 100.0000 (99.7656)	lr 0.000238
+epoch: [24/60][20/73]	time 0.382 (1.945)	data 0.000 (1.561)	eta 1:26:54	loss_t 0.0004 (0.0362)	loss_x 1.6579 (1.6021)	acc 100.0000 (99.8438)	lr 0.000238
+epoch: [24/60][30/73]	time 0.358 (1.425)	data 0.000 (1.041)	eta 1:03:25	loss_t 0.0015 (0.0403)	loss_x 1.7050 (1.6219)	acc 100.0000 (99.7656)	lr 0.000238
+epoch: [24/60][40/73]	time 0.364 (1.163)	data 0.000 (0.781)	eta 0:51:34	loss_t 0.0067 (0.0368)	loss_x 1.5962 (1.6273)	acc 100.0000 (99.6875)	lr 0.000238
+epoch: [24/60][50/73]	time 0.371 (1.004)	data 0.000 (0.625)	eta 0:44:21	loss_t 0.1154 (0.0409)	loss_x 1.6253 (1.6364)	acc 99.2188 (99.5781)	lr 0.000238
+epoch: [24/60][60/73]	time 0.346 (0.897)	data 0.000 (0.521)	eta 0:39:30	loss_t 0.1446 (0.0405)	loss_x 1.8776 (1.6516)	acc 98.4375 (99.5182)	lr 0.000238
+epoch: [24/60][70/73]	time 0.362 (0.821)	data 0.000 (0.446)	eta 0:36:00	loss_t 0.0083 (0.0369)	loss_x 1.6944 (1.6643)	acc 98.4375 (99.2969)	lr 0.000238
+epoch: [25/60][10/73]	time 0.363 (3.495)	data 0.000 (3.109)	eta 2:32:30	loss_t 0.0000 (0.0264)	loss_x 1.4944 (1.6083)	acc 100.0000 (99.6094)	lr 0.000229
+epoch: [25/60][20/73]	time 0.365 (1.933)	data 0.000 (1.555)	eta 1:24:00	loss_t 0.0000 (0.0352)	loss_x 1.5096 (1.5885)	acc 100.0000 (99.7656)	lr 0.000229
+epoch: [25/60][30/73]	time 0.364 (1.413)	data 0.002 (1.037)	eta 1:01:11	loss_t 0.0574 (0.0306)	loss_x 1.5773 (1.5947)	acc 100.0000 (99.8438)	lr 0.000229
+epoch: [25/60][40/73]	time 0.380 (1.152)	data 0.000 (0.777)	eta 0:49:41	loss_t 0.0000 (0.0272)	loss_x 1.5973 (1.6036)	acc 98.4375 (99.7656)	lr 0.000229
+epoch: [25/60][50/73]	time 0.349 (0.995)	data 0.000 (0.622)	eta 0:42:45	loss_t 0.0038 (0.0266)	loss_x 1.6094 (1.6112)	acc 97.6562 (99.7031)	lr 0.000229
+epoch: [25/60][60/73]	time 0.368 (0.891)	data 0.000 (0.519)	eta 0:38:07	loss_t 0.0454 (0.0265)	loss_x 1.6589 (1.6192)	acc 99.2188 (99.6354)	lr 0.000229
+epoch: [25/60][70/73]	time 0.374 (0.818)	data 0.000 (0.444)	eta 0:34:52	loss_t 0.0017 (0.0274)	loss_x 1.5942 (1.6290)	acc 100.0000 (99.6429)	lr 0.000229
+epoch: [26/60][10/73]	time 0.366 (3.493)	data 0.000 (3.093)	eta 2:28:08	loss_t 0.0379 (0.0066)	loss_x 1.5680 (1.5449)	acc 100.0000 (99.8438)	lr 0.000220
+epoch: [26/60][20/73]	time 0.375 (1.929)	data 0.002 (1.547)	eta 1:21:29	loss_t 0.0000 (0.0262)	loss_x 1.4304 (1.5636)	acc 100.0000 (99.8047)	lr 0.000220
+epoch: [26/60][30/73]	time 0.362 (1.408)	data 0.000 (1.032)	eta 0:59:14	loss_t 0.0294 (0.0298)	loss_x 1.5790 (1.5604)	acc 100.0000 (99.8177)	lr 0.000220
+epoch: [26/60][40/73]	time 0.380 (1.149)	data 0.000 (0.774)	eta 0:48:10	loss_t 0.0799 (0.0361)	loss_x 1.5495 (1.5774)	acc 98.4375 (99.6484)	lr 0.000220
+epoch: [26/60][50/73]	time 0.367 (0.994)	data 0.000 (0.619)	eta 0:41:30	loss_t 0.0367 (0.0359)	loss_x 1.6205 (1.5839)	acc 100.0000 (99.6875)	lr 0.000220
+epoch: [26/60][60/73]	time 0.456 (0.892)	data 0.000 (0.516)	eta 0:37:05	loss_t 0.0052 (0.0414)	loss_x 1.6753 (1.6001)	acc 100.0000 (99.6745)	lr 0.000220
+epoch: [26/60][70/73]	time 0.368 (0.817)	data 0.000 (0.442)	eta 0:33:50	loss_t 0.0072 (0.0409)	loss_x 1.6477 (1.6122)	acc 100.0000 (99.5982)	lr 0.000220
+epoch: [27/60][10/73]	time 0.369 (3.478)	data 0.000 (3.088)	eta 2:23:17	loss_t 0.0299 (0.0178)	loss_x 1.4714 (1.5291)	acc 100.0000 (100.0000)	lr 0.000211
+epoch: [27/60][20/73]	time 0.364 (1.925)	data 0.000 (1.544)	eta 1:18:58	loss_t 0.0067 (0.0229)	loss_x 1.5286 (1.5484)	acc 100.0000 (99.8047)	lr 0.000211
+epoch: [27/60][30/73]	time 0.383 (1.406)	data 0.000 (1.030)	eta 0:57:28	loss_t 0.0000 (0.0230)	loss_x 1.5155 (1.5429)	acc 98.4375 (99.7656)	lr 0.000211
+epoch: [27/60][40/73]	time 0.392 (1.150)	data 0.000 (0.772)	eta 0:46:47	loss_t 0.0000 (0.0215)	loss_x 1.6042 (1.5543)	acc 100.0000 (99.6680)	lr 0.000211
+epoch: [27/60][50/73]	time 0.347 (0.993)	data 0.000 (0.618)	eta 0:40:15	loss_t 0.0000 (0.0303)	loss_x 1.5898 (1.5650)	acc 100.0000 (99.6094)	lr 0.000211
+epoch: [27/60][60/73]	time 0.348 (0.888)	data 0.000 (0.515)	eta 0:35:50	loss_t 0.0000 (0.0294)	loss_x 1.5128 (1.5692)	acc 100.0000 (99.5312)	lr 0.000211
+epoch: [27/60][70/73]	time 0.374 (0.813)	data 0.000 (0.441)	eta 0:32:39	loss_t 0.0245 (0.0299)	loss_x 1.6273 (1.5777)	acc 100.0000 (99.5424)	lr 0.000211
+epoch: [28/60][10/73]	time 0.360 (3.493)	data 0.000 (3.110)	eta 2:19:39	loss_t 0.0272 (0.0273)	loss_x 1.5719 (1.5079)	acc 100.0000 (99.7656)	lr 0.000202
+epoch: [28/60][20/73]	time 0.352 (1.936)	data 0.000 (1.555)	eta 1:17:05	loss_t 0.1234 (0.0276)	loss_x 1.6272 (1.5229)	acc 100.0000 (99.8438)	lr 0.000202
+epoch: [28/60][30/73]	time 0.359 (1.413)	data 0.000 (1.037)	eta 0:56:01	loss_t 0.0790 (0.0364)	loss_x 1.6057 (1.5313)	acc 100.0000 (99.8438)	lr 0.000202
+epoch: [28/60][40/73]	time 0.365 (1.151)	data 0.000 (0.778)	eta 0:45:27	loss_t 0.0000 (0.0368)	loss_x 1.6790 (1.5479)	acc 100.0000 (99.6680)	lr 0.000202
+epoch: [28/60][50/73]	time 0.361 (0.995)	data 0.000 (0.622)	eta 0:39:06	loss_t 0.0698 (0.0361)	loss_x 1.6498 (1.5529)	acc 100.0000 (99.7188)	lr 0.000202
+epoch: [28/60][60/73]	time 0.375 (0.890)	data 0.000 (0.518)	eta 0:34:49	loss_t 0.0030 (0.0334)	loss_x 1.7031 (1.5604)	acc 100.0000 (99.6615)	lr 0.000202
+epoch: [28/60][70/73]	time 0.355 (0.815)	data 0.000 (0.444)	eta 0:31:46	loss_t 0.0113 (0.0314)	loss_x 1.5850 (1.5663)	acc 100.0000 (99.6652)	lr 0.000202
+epoch: [29/60][10/73]	time 0.381 (3.498)	data 0.000 (3.105)	eta 2:15:35	loss_t 0.0000 (0.0120)	loss_x 1.4470 (1.4829)	acc 99.2188 (99.6094)	lr 0.000193
+epoch: [29/60][20/73]	time 0.365 (1.938)	data 0.000 (1.553)	eta 1:14:48	loss_t 0.0105 (0.0156)	loss_x 1.5152 (1.4910)	acc 100.0000 (99.7266)	lr 0.000193
+epoch: [29/60][30/73]	time 0.349 (1.415)	data 0.000 (1.035)	eta 0:54:23	loss_t 0.0013 (0.0237)	loss_x 1.6130 (1.4991)	acc 100.0000 (99.7917)	lr 0.000193
+epoch: [29/60][40/73]	time 0.387 (1.154)	data 0.000 (0.777)	eta 0:44:10	loss_t 0.0068 (0.0243)	loss_x 1.4966 (1.5106)	acc 99.2188 (99.7852)	lr 0.000193
+epoch: [29/60][50/73]	time 0.350 (0.997)	data 0.001 (0.621)	eta 0:37:58	loss_t 0.0000 (0.0228)	loss_x 1.5613 (1.5145)	acc 100.0000 (99.7188)	lr 0.000193
+epoch: [29/60][60/73]	time 0.363 (0.892)	data 0.000 (0.518)	eta 0:33:49	loss_t 0.0148 (0.0224)	loss_x 1.5828 (1.5214)	acc 100.0000 (99.7005)	lr 0.000193
+epoch: [29/60][70/73]	time 0.366 (0.817)	data 0.000 (0.444)	eta 0:30:50	loss_t 0.0073 (0.0263)	loss_x 1.5228 (1.5327)	acc 100.0000 (99.6763)	lr 0.000193
+epoch: [30/60][10/73]	time 0.376 (3.501)	data 0.000 (3.109)	eta 2:11:27	loss_t 0.0015 (0.0061)	loss_x 1.4625 (1.4780)	acc 98.4375 (99.8438)	lr 0.000184
+epoch: [30/60][20/73]	time 0.364 (1.933)	data 0.000 (1.554)	eta 1:12:16	loss_t 0.0229 (0.0108)	loss_x 1.4866 (1.4897)	acc 100.0000 (99.7266)	lr 0.000184
+epoch: [30/60][30/73]	time 0.377 (1.412)	data 0.000 (1.036)	eta 0:52:33	loss_t 0.0024 (0.0210)	loss_x 1.4348 (1.4921)	acc 100.0000 (99.7396)	lr 0.000184
+epoch: [30/60][40/73]	time 0.363 (1.151)	data 0.001 (0.777)	eta 0:42:38	loss_t 0.0382 (0.0176)	loss_x 1.5265 (1.4970)	acc 99.2188 (99.7070)	lr 0.000184
+epoch: [30/60][50/73]	time 0.360 (0.994)	data 0.000 (0.622)	eta 0:36:40	loss_t 0.0000 (0.0157)	loss_x 1.4715 (1.4971)	acc 100.0000 (99.7031)	lr 0.000184
+epoch: [30/60][60/73]	time 0.363 (0.890)	data 0.000 (0.518)	eta 0:32:40	loss_t 0.0098 (0.0150)	loss_x 1.4991 (1.5015)	acc 100.0000 (99.6484)	lr 0.000184
+epoch: [30/60][70/73]	time 0.373 (0.815)	data 0.000 (0.444)	eta 0:29:47	loss_t 0.0053 (0.0176)	loss_x 1.6508 (1.5121)	acc 99.2188 (99.5536)	lr 0.000184
+##### Evaluating soccernetv3 (source) #####
+Extracting features from query set ...
+Done, obtained 11638-by-512 matrix
+Extracting features from gallery set ...
+Done, obtained 34355-by-512 matrix
+Speed: 0.0284 sec/batch
+Computing distance matrix with metric=euclidean ...
+Computing CMC and mAP ...
+** Results **
+mAP: 54.1%
+CMC curve
+Rank-1  : 42.8%
+Rank-5  : 0.0%
+Rank-10 : 0.0%
+Rank-20 : 0.0%
+##### Evaluating soccernetv3_test (target) #####
+Extracting features from query set ...
+Done, obtained 11777-by-512 matrix
+Extracting features from gallery set ...
+Done, obtained 34989-by-512 matrix
+Speed: 0.0283 sec/batch
+Computing distance matrix with metric=euclidean ...
+Computing CMC and mAP ...
+** Results **
+mAP: 53.4%
+CMC curve
+Rank-1  : 42.5%
+Rank-5  : 0.0%
+Rank-10 : 0.0%
+Rank-20 : 0.0%
+##### Evaluating soccernetv3_challenge (target) #####
+Extracting features from query set ...
+Done, obtained 9021-by-512 matrix
+Extracting features from gallery set ...
+Done, obtained 26082-by-512 matrix
+Speed: 0.0286 sec/batch
+Computing distance matrix with metric=euclidean ...
+Couldn't compute CMC and mAP because of hidden identity labels.
+Checkpoint saved to "log/optimized_osnet_20250606_040415\model\model.pth.tar-30"
+epoch: [31/60][10/73]	time 0.378 (3.500)	data 0.000 (3.109)	eta 2:07:10	loss_t 0.0485 (0.0243)	loss_x 1.5009 (1.4642)	acc 100.0000 (99.6094)	lr 0.000175
+epoch: [31/60][20/73]	time 0.357 (1.934)	data 0.000 (1.555)	eta 1:09:56	loss_t 0.0955 (0.0270)	loss_x 1.5386 (1.4652)	acc 100.0000 (99.7656)	lr 0.000175
+epoch: [31/60][30/73]	time 0.367 (1.410)	data 0.000 (1.037)	eta 0:50:45	loss_t 0.0082 (0.0237)	loss_x 1.6022 (1.4704)	acc 100.0000 (99.6354)	lr 0.000175
+epoch: [31/60][40/73]	time 0.377 (1.150)	data 0.000 (0.777)	eta 0:41:12	loss_t 0.0559 (0.0246)	loss_x 1.5017 (1.4787)	acc 100.0000 (99.6680)	lr 0.000175
+epoch: [31/60][50/73]	time 0.359 (0.994)	data 0.000 (0.622)	eta 0:35:26	loss_t 0.0587 (0.0240)	loss_x 1.6063 (1.4845)	acc 98.4375 (99.6562)	lr 0.000175
+epoch: [31/60][60/73]	time 0.347 (0.890)	data 0.000 (0.518)	eta 0:31:35	loss_t 0.0041 (0.0215)	loss_x 1.6288 (1.4904)	acc 98.4375 (99.5443)	lr 0.000175
+epoch: [31/60][70/73]	time 0.368 (0.815)	data 0.000 (0.444)	eta 0:28:48	loss_t 0.0132 (0.0201)	loss_x 1.5684 (1.4919)	acc 99.2188 (99.5312)	lr 0.000175
+epoch: [32/60][10/73]	time 0.357 (3.484)	data 0.000 (3.090)	eta 2:02:21	loss_t 0.0000 (0.0174)	loss_x 1.4193 (1.4683)	acc 100.0000 (99.8438)	lr 0.000166
+epoch: [32/60][20/73]	time 0.372 (1.930)	data 0.000 (1.545)	eta 1:07:26	loss_t 0.0164 (0.0160)	loss_x 1.4894 (1.4665)	acc 99.2188 (99.7656)	lr 0.000166
+epoch: [32/60][30/73]	time 0.370 (1.411)	data 0.000 (1.030)	eta 0:49:04	loss_t 0.0013 (0.0133)	loss_x 1.3928 (1.4647)	acc 100.0000 (99.7917)	lr 0.000166
+epoch: [32/60][40/73]	time 0.371 (1.151)	data 0.000 (0.773)	eta 0:39:50	loss_t 0.0493 (0.0141)	loss_x 1.5321 (1.4621)	acc 100.0000 (99.8438)	lr 0.000166
+epoch: [32/60][50/73]	time 0.376 (0.995)	data 0.000 (0.618)	eta 0:34:16	loss_t 0.0219 (0.0147)	loss_x 1.4599 (1.4671)	acc 100.0000 (99.7969)	lr 0.000166
+epoch: [32/60][60/73]	time 0.366 (0.890)	data 0.000 (0.515)	eta 0:30:31	loss_t 0.0011 (0.0136)	loss_x 1.5136 (1.4736)	acc 96.0938 (99.7526)	lr 0.000166
+epoch: [32/60][70/73]	time 0.360 (0.817)	data 0.000 (0.442)	eta 0:27:52	loss_t 0.0204 (0.0136)	loss_x 1.5072 (1.4826)	acc 99.2188 (99.6875)	lr 0.000166
+epoch: [33/60][10/73]	time 0.343 (3.509)	data 0.000 (3.128)	eta 1:58:57	loss_t 0.0665 (0.0320)	loss_x 1.4409 (1.4437)	acc 100.0000 (100.0000)	lr 0.000157
+epoch: [33/60][20/73]	time 0.376 (1.940)	data 0.002 (1.564)	eta 1:05:26	loss_t 0.0033 (0.0201)	loss_x 1.4615 (1.4445)	acc 100.0000 (99.9609)	lr 0.000157
+epoch: [33/60][30/73]	time 0.368 (1.420)	data 0.000 (1.043)	eta 0:47:40	loss_t 0.0021 (0.0208)	loss_x 1.5025 (1.4569)	acc 99.2188 (99.7917)	lr 0.000157
+epoch: [33/60][40/73]	time 0.378 (1.159)	data 0.000 (0.783)	eta 0:38:43	loss_t 0.0000 (0.0228)	loss_x 1.4536 (1.4533)	acc 100.0000 (99.8242)	lr 0.000157
+epoch: [33/60][50/73]	time 0.412 (1.003)	data 0.002 (0.626)	eta 0:33:19	loss_t 0.0161 (0.0239)	loss_x 1.6149 (1.4613)	acc 100.0000 (99.8281)	lr 0.000157
+epoch: [33/60][60/73]	time 0.363 (0.898)	data 0.000 (0.522)	eta 0:29:41	loss_t 0.0026 (0.0262)	loss_x 1.4213 (1.4743)	acc 100.0000 (99.6745)	lr 0.000157
+epoch: [33/60][70/73]	time 0.369 (0.821)	data 0.001 (0.447)	eta 0:27:01	loss_t 0.0302 (0.0295)	loss_x 1.4978 (1.4792)	acc 100.0000 (99.6875)	lr 0.000157
+epoch: [34/60][10/73]	time 0.404 (3.469)	data 0.000 (3.087)	eta 1:53:21	loss_t 0.0555 (0.0164)	loss_x 1.5032 (1.4345)	acc 100.0000 (100.0000)	lr 0.000148
+epoch: [34/60][20/73]	time 0.374 (1.918)	data 0.000 (1.544)	eta 1:02:21	loss_t 0.0000 (0.0208)	loss_x 1.4015 (1.4482)	acc 100.0000 (99.8828)	lr 0.000148
+epoch: [34/60][30/73]	time 0.365 (1.400)	data 0.002 (1.029)	eta 0:45:17	loss_t 0.2727 (0.0444)	loss_x 1.4160 (1.4562)	acc 100.0000 (99.8958)	lr 0.000148
+epoch: [34/60][40/73]	time 0.367 (1.144)	data 0.001 (0.772)	eta 0:36:48	loss_t 0.0068 (0.0368)	loss_x 1.4333 (1.4585)	acc 99.2188 (99.8047)	lr 0.000148
+epoch: [34/60][50/73]	time 0.369 (0.993)	data 0.000 (0.618)	eta 0:31:46	loss_t 0.0000 (0.0318)	loss_x 1.4987 (1.4616)	acc 100.0000 (99.6875)	lr 0.000148
+epoch: [34/60][60/73]	time 0.363 (0.890)	data 0.000 (0.515)	eta 0:28:19	loss_t 0.0113 (0.0297)	loss_x 1.4615 (1.4641)	acc 100.0000 (99.7135)	lr 0.000148
+epoch: [34/60][70/73]	time 0.346 (0.814)	data 0.000 (0.441)	eta 0:25:48	loss_t 0.0026 (0.0306)	loss_x 1.5475 (1.4695)	acc 99.2188 (99.6763)	lr 0.000148
+epoch: [35/60][10/73]	time 0.376 (3.476)	data 0.000 (3.092)	eta 1:49:23	loss_t 0.0000 (0.0237)	loss_x 1.3524 (1.4371)	acc 100.0000 (100.0000)	lr 0.000139
+epoch: [35/60][20/73]	time 0.363 (1.923)	data 0.001 (1.546)	eta 1:00:11	loss_t 0.0142 (0.0170)	loss_x 1.4317 (1.4323)	acc 100.0000 (100.0000)	lr 0.000139
+epoch: [35/60][30/73]	time 0.374 (1.407)	data 0.002 (1.031)	eta 0:43:47	loss_t 0.0596 (0.0208)	loss_x 1.5001 (1.4367)	acc 100.0000 (99.9740)	lr 0.000139
+epoch: [35/60][40/73]	time 0.382 (1.148)	data 0.000 (0.773)	eta 0:35:33	loss_t 0.0019 (0.0211)	loss_x 1.3779 (1.4361)	acc 100.0000 (99.9805)	lr 0.000139
+epoch: [35/60][50/73]	time 0.362 (0.992)	data 0.000 (0.619)	eta 0:30:34	loss_t 0.0451 (0.0189)	loss_x 1.4089 (1.4329)	acc 100.0000 (99.9531)	lr 0.000139
+epoch: [35/60][60/73]	time 0.370 (0.889)	data 0.000 (0.515)	eta 0:27:14	loss_t 0.0000 (0.0206)	loss_x 1.4688 (1.4405)	acc 99.2188 (99.9089)	lr 0.000139
+epoch: [35/60][70/73]	time 0.377 (0.814)	data 0.000 (0.442)	eta 0:24:48	loss_t 0.0112 (0.0189)	loss_x 1.5281 (1.4502)	acc 100.0000 (99.8326)	lr 0.000139
+epoch: [36/60][10/73]	time 0.378 (3.485)	data 0.000 (3.098)	eta 1:45:25	loss_t 0.0000 (0.0149)	loss_x 1.4014 (1.4087)	acc 100.0000 (99.8438)	lr 0.000130
+epoch: [36/60][20/73]	time 0.376 (1.926)	data 0.002 (1.549)	eta 0:57:56	loss_t 0.0556 (0.0118)	loss_x 1.5423 (1.4185)	acc 99.2188 (99.7656)	lr 0.000130
+epoch: [36/60][30/73]	time 0.400 (1.411)	data 0.000 (1.033)	eta 0:42:12	loss_t 0.0230 (0.0141)	loss_x 1.5024 (1.4253)	acc 99.2188 (99.7917)	lr 0.000130
+epoch: [36/60][40/73]	time 0.365 (1.152)	data 0.000 (0.775)	eta 0:34:17	loss_t 0.0048 (0.0116)	loss_x 1.4268 (1.4283)	acc 100.0000 (99.8047)	lr 0.000130
+epoch: [36/60][50/73]	time 0.383 (0.997)	data 0.000 (0.620)	eta 0:29:29	loss_t 0.0426 (0.0120)	loss_x 1.3983 (1.4264)	acc 100.0000 (99.8281)	lr 0.000130
+epoch: [36/60][60/73]	time 0.399 (0.892)	data 0.000 (0.516)	eta 0:26:14	loss_t 0.0213 (0.0131)	loss_x 1.4370 (1.4332)	acc 100.0000 (99.7786)	lr 0.000130
+epoch: [36/60][70/73]	time 0.354 (0.817)	data 0.000 (0.443)	eta 0:23:53	loss_t 0.0029 (0.0173)	loss_x 1.3694 (1.4373)	acc 100.0000 (99.7768)	lr 0.000130
+epoch: [37/60][10/73]	time 0.360 (3.487)	data 0.000 (3.098)	eta 1:41:13	loss_t 0.0238 (0.0075)	loss_x 1.5378 (1.4130)	acc 99.2188 (99.8438)	lr 0.000121
+epoch: [37/60][20/73]	time 0.366 (1.929)	data 0.000 (1.549)	eta 0:55:41	loss_t 0.0096 (0.0090)	loss_x 1.3618 (1.4022)	acc 99.2188 (99.8047)	lr 0.000121
+epoch: [37/60][30/73]	time 0.377 (1.410)	data 0.000 (1.033)	eta 0:40:28	loss_t 0.0000 (0.0237)	loss_x 1.5198 (1.4199)	acc 98.4375 (99.7396)	lr 0.000121
+epoch: [37/60][40/73]	time 0.378 (1.152)	data 0.000 (0.775)	eta 0:32:51	loss_t 0.0003 (0.0212)	loss_x 1.4931 (1.4268)	acc 100.0000 (99.7266)	lr 0.000121
+epoch: [37/60][50/73]	time 0.369 (0.995)	data 0.000 (0.620)	eta 0:28:13	loss_t 0.0014 (0.0176)	loss_x 1.3702 (1.4268)	acc 100.0000 (99.7656)	lr 0.000121
+epoch: [37/60][60/73]	time 0.354 (0.890)	data 0.000 (0.517)	eta 0:25:05	loss_t 0.0133 (0.0185)	loss_x 1.4817 (1.4297)	acc 100.0000 (99.7917)	lr 0.000121
+epoch: [37/60][70/73]	time 0.360 (0.815)	data 0.000 (0.443)	eta 0:22:50	loss_t 0.0000 (0.0165)	loss_x 1.4493 (1.4340)	acc 100.0000 (99.7321)	lr 0.000121
+epoch: [38/60][10/73]	time 0.409 (3.510)	data 0.016 (3.112)	eta 1:37:39	loss_t 0.1278 (0.0164)	loss_x 1.4613 (1.3871)	acc 100.0000 (100.0000)	lr 0.000112
+epoch: [38/60][20/73]	time 0.388 (1.942)	data 0.000 (1.556)	eta 0:53:41	loss_t 0.0159 (0.0133)	loss_x 1.4088 (1.3855)	acc 100.0000 (100.0000)	lr 0.000112
+epoch: [38/60][30/73]	time 0.365 (1.418)	data 0.000 (1.037)	eta 0:38:58	loss_t 0.0248 (0.0328)	loss_x 1.4347 (1.3976)	acc 100.0000 (99.9740)	lr 0.000112
+epoch: [38/60][40/73]	time 0.389 (1.156)	data 0.000 (0.778)	eta 0:31:34	loss_t 0.0008 (0.0260)	loss_x 1.3969 (1.3996)	acc 100.0000 (99.9219)	lr 0.000112
+epoch: [38/60][50/73]	time 0.378 (0.998)	data 0.000 (0.622)	eta 0:27:06	loss_t 0.0098 (0.0245)	loss_x 1.4653 (1.4043)	acc 100.0000 (99.8906)	lr 0.000112
+epoch: [38/60][60/73]	time 0.355 (0.893)	data 0.000 (0.519)	eta 0:24:06	loss_t 0.0000 (0.0218)	loss_x 1.4154 (1.4107)	acc 100.0000 (99.9089)	lr 0.000112
+epoch: [38/60][70/73]	time 0.378 (0.820)	data 0.001 (0.445)	eta 0:21:59	loss_t 0.0000 (0.0190)	loss_x 1.4952 (1.4162)	acc 100.0000 (99.8438)	lr 0.000112
+epoch: [39/60][10/73]	time 0.370 (3.501)	data 0.000 (3.110)	eta 1:33:07	loss_t 0.0060 (0.0169)	loss_x 1.4095 (1.4090)	acc 100.0000 (99.6875)	lr 0.000104
+epoch: [39/60][20/73]	time 0.378 (1.939)	data 0.000 (1.555)	eta 0:51:15	loss_t 0.0018 (0.0172)	loss_x 1.3930 (1.3952)	acc 100.0000 (99.7656)	lr 0.000104
+epoch: [39/60][30/73]	time 0.370 (1.415)	data 0.001 (1.037)	eta 0:37:10	loss_t 0.0000 (0.0153)	loss_x 1.4522 (1.3984)	acc 99.2188 (99.7396)	lr 0.000104
+epoch: [39/60][40/73]	time 0.379 (1.154)	data 0.000 (0.778)	eta 0:30:06	loss_t 0.0378 (0.0165)	loss_x 1.4489 (1.4011)	acc 100.0000 (99.8047)	lr 0.000104
+epoch: [39/60][50/73]	time 0.363 (0.997)	data 0.000 (0.622)	eta 0:25:50	loss_t 0.0000 (0.0201)	loss_x 1.4093 (1.4026)	acc 100.0000 (99.8438)	lr 0.000104
+epoch: [39/60][60/73]	time 0.345 (0.892)	data 0.000 (0.519)	eta 0:22:58	loss_t 0.0000 (0.0179)	loss_x 1.4171 (1.4082)	acc 100.0000 (99.8568)	lr 0.000104
+epoch: [39/60][70/73]	time 0.361 (0.816)	data 0.000 (0.445)	eta 0:20:53	loss_t 0.0144 (0.0167)	loss_x 1.3665 (1.4093)	acc 100.0000 (99.8549)	lr 0.000104
+epoch: [40/60][10/73]	time 0.365 (3.507)	data 0.000 (3.103)	eta 1:29:01	loss_t 0.0149 (0.0086)	loss_x 1.3564 (1.3716)	acc 100.0000 (99.9219)	lr 0.000096
+epoch: [40/60][20/73]	time 0.359 (1.939)	data 0.002 (1.552)	eta 0:48:53	loss_t 0.0113 (0.0128)	loss_x 1.3842 (1.3771)	acc 100.0000 (99.9609)	lr 0.000096
+epoch: [40/60][30/73]	time 0.356 (1.415)	data 0.000 (1.034)	eta 0:35:26	loss_t 0.0062 (0.0157)	loss_x 1.3784 (1.3919)	acc 100.0000 (99.8958)	lr 0.000096
+epoch: [40/60][40/73]	time 0.356 (1.154)	data 0.000 (0.776)	eta 0:28:43	loss_t 0.0000 (0.0147)	loss_x 1.4150 (1.3951)	acc 98.4375 (99.7852)	lr 0.000096
+epoch: [40/60][50/73]	time 0.363 (1.000)	data 0.000 (0.621)	eta 0:24:42	loss_t 0.0650 (0.0165)	loss_x 1.4728 (1.3956)	acc 100.0000 (99.8281)	lr 0.000096
+epoch: [40/60][60/73]	time 0.365 (0.895)	data 0.000 (0.517)	eta 0:21:57	loss_t 0.0435 (0.0149)	loss_x 1.3551 (1.3967)	acc 100.0000 (99.8568)	lr 0.000096
+epoch: [40/60][70/73]	time 0.358 (0.820)	data 0.000 (0.444)	eta 0:19:59	loss_t 0.0171 (0.0132)	loss_x 1.4257 (1.3971)	acc 100.0000 (99.8661)	lr 0.000096
+##### Evaluating soccernetv3 (source) #####
+Extracting features from query set ...
+Done, obtained 11638-by-512 matrix
+Extracting features from gallery set ...
+Done, obtained 34355-by-512 matrix
+Speed: 0.0286 sec/batch
+Computing distance matrix with metric=euclidean ...
+Computing CMC and mAP ...
+** Results **
+mAP: 54.0%
+CMC curve
+Rank-1  : 43.1%
+Rank-5  : 0.0%
+Rank-10 : 0.0%
+Rank-20 : 0.0%
+##### Evaluating soccernetv3_test (target) #####
+Extracting features from query set ...
+Done, obtained 11777-by-512 matrix
+Extracting features from gallery set ...
+Done, obtained 34989-by-512 matrix
+Speed: 0.0276 sec/batch
+Computing distance matrix with metric=euclidean ...
+Computing CMC and mAP ...
+** Results **
+mAP: 53.2%
+CMC curve
+Rank-1  : 42.4%
+Rank-5  : 0.0%
+Rank-10 : 0.0%
+Rank-20 : 0.0%
+##### Evaluating soccernetv3_challenge (target) #####
+Extracting features from query set ...
+Done, obtained 9021-by-512 matrix
+Extracting features from gallery set ...
+Done, obtained 26082-by-512 matrix
+Speed: 0.0285 sec/batch
+Computing distance matrix with metric=euclidean ...
+Couldn't compute CMC and mAP because of hidden identity labels.
+Checkpoint saved to "log/optimized_osnet_20250606_040415\model\model.pth.tar-40"
+epoch: [41/60][10/73]	time 0.348 (3.554)	data 0.000 (3.171)	eta 1:25:52	loss_t 0.0009 (0.0282)	loss_x 1.3431 (1.3635)	acc 100.0000 (100.0000)	lr 0.000088
+epoch: [41/60][20/73]	time 0.375 (1.961)	data 0.000 (1.585)	eta 0:47:04	loss_t 0.0168 (0.0310)	loss_x 1.3269 (1.3740)	acc 100.0000 (99.9609)	lr 0.000088
+epoch: [41/60][30/73]	time 0.371 (1.430)	data 0.000 (1.057)	eta 0:34:05	loss_t 0.0009 (0.0276)	loss_x 1.4217 (1.3806)	acc 100.0000 (99.9479)	lr 0.000088
+epoch: [41/60][40/73]	time 0.435 (1.168)	data 0.000 (0.793)	eta 0:27:38	loss_t 0.0000 (0.0213)	loss_x 1.3684 (1.3798)	acc 100.0000 (99.9609)	lr 0.000088
+epoch: [41/60][50/73]	time 0.445 (1.010)	data 0.000 (0.634)	eta 0:23:44	loss_t 0.0039 (0.0193)	loss_x 1.4150 (1.3846)	acc 100.0000 (99.9375)	lr 0.000088
+epoch: [41/60][60/73]	time 0.349 (0.903)	data 0.000 (0.529)	eta 0:21:03	loss_t 0.0043 (0.0163)	loss_x 1.4386 (1.3878)	acc 100.0000 (99.9219)	lr 0.000088
+epoch: [41/60][70/73]	time 0.378 (0.826)	data 0.000 (0.453)	eta 0:19:07	loss_t 0.0034 (0.0143)	loss_x 1.4772 (1.3928)	acc 100.0000 (99.9107)	lr 0.000088
+epoch: [42/60][10/73]	time 0.364 (3.499)	data 0.000 (3.108)	eta 1:20:18	loss_t 0.0000 (0.0063)	loss_x 1.3730 (1.3641)	acc 100.0000 (99.8438)	lr 0.000080
+epoch: [42/60][20/73]	time 0.366 (1.937)	data 0.000 (1.554)	eta 0:44:07	loss_t 0.0016 (0.0081)	loss_x 1.3785 (1.3696)	acc 100.0000 (99.9219)	lr 0.000080
+epoch: [42/60][30/73]	time 0.365 (1.418)	data 0.000 (1.037)	eta 0:32:03	loss_t 0.0000 (0.0065)	loss_x 1.3461 (1.3730)	acc 100.0000 (99.8958)	lr 0.000080
+epoch: [42/60][40/73]	time 0.362 (1.157)	data 0.000 (0.778)	eta 0:25:58	loss_t 0.0000 (0.0092)	loss_x 1.3386 (1.3766)	acc 100.0000 (99.9219)	lr 0.000080
+epoch: [42/60][50/73]	time 0.366 (1.000)	data 0.000 (0.622)	eta 0:22:17	loss_t 0.0000 (0.0178)	loss_x 1.3476 (1.3814)	acc 100.0000 (99.9219)	lr 0.000080
+epoch: [42/60][60/73]	time 0.366 (0.895)	data 0.000 (0.519)	eta 0:19:47	loss_t 0.0000 (0.0157)	loss_x 1.3709 (1.3854)	acc 100.0000 (99.9219)	lr 0.000080
+epoch: [42/60][70/73]	time 0.362 (0.818)	data 0.000 (0.445)	eta 0:17:57	loss_t 0.0000 (0.0144)	loss_x 1.3970 (1.3843)	acc 100.0000 (99.9219)	lr 0.000080
+epoch: [43/60][10/73]	time 0.373 (3.524)	data 0.001 (3.124)	eta 1:16:35	loss_t 0.0000 (0.0036)	loss_x 1.3554 (1.3783)	acc 100.0000 (99.9219)	lr 0.000072
+epoch: [43/60][20/73]	time 0.395 (1.948)	data 0.000 (1.562)	eta 0:42:01	loss_t 0.0010 (0.0070)	loss_x 1.3889 (1.3739)	acc 100.0000 (99.8828)	lr 0.000072
+epoch: [43/60][30/73]	time 0.387 (1.423)	data 0.000 (1.042)	eta 0:30:26	loss_t 0.0000 (0.0109)	loss_x 1.3301 (1.3686)	acc 100.0000 (99.7917)	lr 0.000072
+epoch: [43/60][40/73]	time 0.360 (1.161)	data 0.000 (0.782)	eta 0:24:38	loss_t 0.0000 (0.0100)	loss_x 1.4220 (1.3738)	acc 100.0000 (99.8242)	lr 0.000072
+epoch: [43/60][50/73]	time 0.370 (1.003)	data 0.000 (0.625)	eta 0:21:07	loss_t 0.0105 (0.0090)	loss_x 1.5210 (1.3841)	acc 99.2188 (99.8438)	lr 0.000072
+epoch: [43/60][60/73]	time 0.367 (0.896)	data 0.000 (0.521)	eta 0:18:44	loss_t 0.0397 (0.0093)	loss_x 1.4237 (1.3912)	acc 99.2188 (99.8438)	lr 0.000072
+epoch: [43/60][70/73]	time 0.364 (0.823)	data 0.000 (0.447)	eta 0:17:03	loss_t 0.0000 (0.0107)	loss_x 1.3728 (1.3902)	acc 100.0000 (99.8549)	lr 0.000072
+epoch: [44/60][10/73]	time 0.376 (3.493)	data 0.000 (3.098)	eta 1:11:40	loss_t 0.0325 (0.0082)	loss_x 1.3915 (1.3573)	acc 100.0000 (99.9219)	lr 0.000065
+epoch: [44/60][20/73]	time 0.361 (1.931)	data 0.000 (1.550)	eta 0:39:17	loss_t 0.0062 (0.0149)	loss_x 1.3730 (1.3728)	acc 100.0000 (99.9219)	lr 0.000065
+epoch: [44/60][30/73]	time 0.364 (1.411)	data 0.000 (1.033)	eta 0:28:28	loss_t 0.0000 (0.0149)	loss_x 1.3634 (1.3717)	acc 99.2188 (99.8958)	lr 0.000065
+epoch: [44/60][40/73]	time 0.376 (1.152)	data 0.000 (0.775)	eta 0:23:03	loss_t 0.0062 (0.0142)	loss_x 1.3513 (1.3746)	acc 100.0000 (99.9219)	lr 0.000065
+epoch: [44/60][50/73]	time 0.373 (0.995)	data 0.000 (0.620)	eta 0:19:45	loss_t 0.0000 (0.0123)	loss_x 1.3420 (1.3759)	acc 100.0000 (99.8750)	lr 0.000065
+epoch: [44/60][60/73]	time 0.352 (0.891)	data 0.002 (0.517)	eta 0:17:31	loss_t 0.2097 (0.0177)	loss_x 1.4202 (1.3765)	acc 100.0000 (99.8958)	lr 0.000065
+epoch: [44/60][70/73]	time 0.413 (0.816)	data 0.000 (0.443)	eta 0:15:55	loss_t 0.0068 (0.0185)	loss_x 1.4580 (1.3801)	acc 100.0000 (99.8996)	lr 0.000065
+epoch: [45/60][10/73]	time 0.363 (3.512)	data 0.000 (3.123)	eta 1:07:46	loss_t 0.0318 (0.0138)	loss_x 1.4230 (1.3659)	acc 100.0000 (99.8438)	lr 0.000058
+epoch: [45/60][20/73]	time 0.351 (1.941)	data 0.002 (1.562)	eta 0:37:07	loss_t 0.0029 (0.0085)	loss_x 1.3717 (1.3688)	acc 100.0000 (99.9219)	lr 0.000058
+epoch: [45/60][30/73]	time 0.422 (1.422)	data 0.000 (1.041)	eta 0:26:57	loss_t 0.0198 (0.0084)	loss_x 1.4501 (1.3713)	acc 97.6562 (99.8177)	lr 0.000058
+epoch: [45/60][40/73]	time 0.380 (1.158)	data 0.002 (0.781)	eta 0:21:46	loss_t 0.0281 (0.0077)	loss_x 1.4176 (1.3687)	acc 100.0000 (99.8633)	lr 0.000058
+epoch: [45/60][50/73]	time 0.365 (1.002)	data 0.000 (0.625)	eta 0:18:39	loss_t 0.0000 (0.0082)	loss_x 1.4130 (1.3765)	acc 100.0000 (99.8906)	lr 0.000058
+epoch: [45/60][60/73]	time 0.363 (0.896)	data 0.000 (0.521)	eta 0:16:32	loss_t 0.0078 (0.0084)	loss_x 1.4418 (1.3755)	acc 100.0000 (99.8698)	lr 0.000058
+epoch: [45/60][70/73]	time 0.366 (0.819)	data 0.000 (0.447)	eta 0:14:59	loss_t 0.0000 (0.0074)	loss_x 1.4070 (1.3777)	acc 100.0000 (99.8772)	lr 0.000058
+epoch: [46/60][10/73]	time 0.364 (3.546)	data 0.000 (3.147)	eta 1:04:07	loss_t 0.0000 (0.0161)	loss_x 1.3195 (1.3794)	acc 100.0000 (99.9219)	lr 0.000051
+epoch: [46/60][20/73]	time 0.363 (1.958)	data 0.000 (1.574)	eta 0:35:04	loss_t 0.0114 (0.0270)	loss_x 1.3443 (1.3772)	acc 100.0000 (99.8828)	lr 0.000051
+epoch: [46/60][30/73]	time 0.370 (1.433)	data 0.005 (1.049)	eta 0:25:26	loss_t 0.0128 (0.0286)	loss_x 1.3978 (1.3758)	acc 99.2188 (99.8958)	lr 0.000051
+epoch: [46/60][40/73]	time 0.402 (1.171)	data 0.000 (0.787)	eta 0:20:35	loss_t 0.0135 (0.0274)	loss_x 1.3733 (1.3761)	acc 100.0000 (99.9023)	lr 0.000051
+epoch: [46/60][50/73]	time 0.368 (1.011)	data 0.000 (0.630)	eta 0:17:36	loss_t 0.0000 (0.0225)	loss_x 1.3766 (1.3785)	acc 100.0000 (99.8750)	lr 0.000051
+epoch: [46/60][60/73]	time 0.363 (0.904)	data 0.000 (0.525)	eta 0:15:35	loss_t 0.0009 (0.0194)	loss_x 1.3802 (1.3774)	acc 100.0000 (99.8698)	lr 0.000051
+epoch: [46/60][70/73]	time 0.375 (0.830)	data 0.000 (0.450)	eta 0:14:10	loss_t 0.0000 (0.0170)	loss_x 1.4015 (1.3761)	acc 99.2188 (99.8772)	lr 0.000051
+epoch: [47/60][10/73]	time 0.358 (3.562)	data 0.000 (3.175)	eta 1:00:04	loss_t 0.0100 (0.0124)	loss_x 1.3096 (1.3345)	acc 100.0000 (99.8438)	lr 0.000045
+epoch: [47/60][20/73]	time 0.365 (1.964)	data 0.000 (1.588)	eta 0:32:47	loss_t 0.0000 (0.0116)	loss_x 1.3197 (1.3457)	acc 100.0000 (99.9219)	lr 0.000045
+epoch: [47/60][30/73]	time 0.373 (1.431)	data 0.000 (1.059)	eta 0:23:39	loss_t 0.0254 (0.0105)	loss_x 1.4295 (1.3538)	acc 100.0000 (99.9479)	lr 0.000045
+epoch: [47/60][40/73]	time 0.368 (1.165)	data 0.000 (0.794)	eta 0:19:04	loss_t 0.0114 (0.0098)	loss_x 1.4510 (1.3595)	acc 100.0000 (99.9609)	lr 0.000045
+epoch: [47/60][50/73]	time 0.382 (1.006)	data 0.002 (0.635)	eta 0:16:18	loss_t 0.0167 (0.0111)	loss_x 1.3893 (1.3634)	acc 99.2188 (99.9219)	lr 0.000045
+epoch: [47/60][60/73]	time 0.367 (0.900)	data 0.000 (0.530)	eta 0:14:25	loss_t 0.0003 (0.0099)	loss_x 1.3760 (1.3612)	acc 100.0000 (99.9219)	lr 0.000045
+epoch: [47/60][70/73]	time 0.374 (0.823)	data 0.010 (0.454)	eta 0:13:03	loss_t 0.0000 (0.0116)	loss_x 1.3151 (1.3655)	acc 100.0000 (99.8996)	lr 0.000045
+epoch: [48/60][10/73]	time 0.366 (3.483)	data 0.000 (3.097)	eta 0:54:30	loss_t 0.0354 (0.0219)	loss_x 1.3860 (1.3586)	acc 100.0000 (100.0000)	lr 0.000039
+epoch: [48/60][20/73]	time 0.377 (1.927)	data 0.000 (1.548)	eta 0:29:49	loss_t 0.0000 (0.0133)	loss_x 1.3896 (1.3607)	acc 100.0000 (100.0000)	lr 0.000039
+epoch: [48/60][30/73]	time 0.410 (1.411)	data 0.000 (1.032)	eta 0:21:36	loss_t 0.0000 (0.0102)	loss_x 1.3074 (1.3619)	acc 100.0000 (99.8958)	lr 0.000039
+epoch: [48/60][40/73]	time 0.379 (1.152)	data 0.000 (0.774)	eta 0:17:27	loss_t 0.0000 (0.0097)	loss_x 1.3199 (1.3626)	acc 100.0000 (99.9219)	lr 0.000039
+epoch: [48/60][50/73]	time 0.396 (0.997)	data 0.002 (0.620)	eta 0:14:56	loss_t 0.0180 (0.0098)	loss_x 1.3658 (1.3612)	acc 99.2188 (99.9219)	lr 0.000039
+epoch: [48/60][60/73]	time 0.369 (0.891)	data 0.000 (0.516)	eta 0:13:12	loss_t 0.0000 (0.0121)	loss_x 1.3535 (1.3656)	acc 100.0000 (99.8828)	lr 0.000039
+epoch: [48/60][70/73]	time 0.347 (0.816)	data 0.000 (0.443)	eta 0:11:56	loss_t 0.0000 (0.0108)	loss_x 1.3631 (1.3661)	acc 100.0000 (99.8996)	lr 0.000039
+epoch: [49/60][10/73]	time 0.383 (3.480)	data 0.000 (3.098)	eta 0:50:13	loss_t 0.0116 (0.0105)	loss_x 1.3506 (1.3529)	acc 100.0000 (99.8438)	lr 0.000033
+epoch: [49/60][20/73]	time 0.365 (1.927)	data 0.000 (1.550)	eta 0:27:29	loss_t 0.0033 (0.0382)	loss_x 1.3157 (1.3601)	acc 100.0000 (99.8047)	lr 0.000033
+epoch: [49/60][30/73]	time 0.361 (1.411)	data 0.000 (1.033)	eta 0:19:53	loss_t 0.0198 (0.0277)	loss_x 1.3270 (1.3578)	acc 100.0000 (99.8438)	lr 0.000033
+epoch: [49/60][40/73]	time 0.377 (1.153)	data 0.002 (0.775)	eta 0:16:03	loss_t 0.0671 (0.0245)	loss_x 1.3635 (1.3615)	acc 100.0000 (99.8828)	lr 0.000033
+epoch: [49/60][50/73]	time 0.389 (0.997)	data 0.002 (0.620)	eta 0:13:43	loss_t 0.0000 (0.0208)	loss_x 1.3053 (1.3598)	acc 100.0000 (99.9062)	lr 0.000033
+epoch: [49/60][60/73]	time 0.356 (0.891)	data 0.000 (0.517)	eta 0:12:07	loss_t 0.0000 (0.0182)	loss_x 1.3305 (1.3585)	acc 100.0000 (99.9089)	lr 0.000033
+epoch: [49/60][70/73]	time 0.351 (0.816)	data 0.000 (0.443)	eta 0:10:58	loss_t 0.0039 (0.0163)	loss_x 1.3448 (1.3588)	acc 100.0000 (99.9219)	lr 0.000033
+epoch: [50/60][10/73]	time 0.372 (3.515)	data 0.000 (3.121)	eta 0:46:27	loss_t 0.0000 (0.0059)	loss_x 1.3125 (1.3683)	acc 100.0000 (99.9219)	lr 0.000028
+epoch: [50/60][20/73]	time 0.369 (1.947)	data 0.000 (1.561)	eta 0:25:24	loss_t 0.0166 (0.0069)	loss_x 1.4156 (1.3671)	acc 100.0000 (99.9219)	lr 0.000028
+epoch: [50/60][30/73]	time 0.355 (1.420)	data 0.000 (1.041)	eta 0:18:17	loss_t 0.0000 (0.0092)	loss_x 1.3642 (1.3684)	acc 100.0000 (99.8698)	lr 0.000028
+epoch: [50/60][40/73]	time 0.357 (1.158)	data 0.001 (0.781)	eta 0:14:43	loss_t 0.0000 (0.0077)	loss_x 1.3367 (1.3633)	acc 100.0000 (99.8242)	lr 0.000028
+epoch: [50/60][50/73]	time 0.367 (1.001)	data 0.000 (0.625)	eta 0:12:33	loss_t 0.0140 (0.0097)	loss_x 1.3500 (1.3627)	acc 100.0000 (99.8438)	lr 0.000028
+epoch: [50/60][60/73]	time 0.363 (0.896)	data 0.000 (0.520)	eta 0:11:05	loss_t 0.0000 (0.0104)	loss_x 1.3412 (1.3588)	acc 100.0000 (99.8698)	lr 0.000028
+epoch: [50/60][70/73]	time 0.360 (0.820)	data 0.000 (0.446)	eta 0:10:01	loss_t 0.0000 (0.0135)	loss_x 1.3393 (1.3595)	acc 100.0000 (99.8772)	lr 0.000028
+##### Evaluating soccernetv3 (source) #####
+Extracting features from query set ...
+Done, obtained 11638-by-512 matrix
+Extracting features from gallery set ...
+Done, obtained 34355-by-512 matrix
+Speed: 0.0285 sec/batch
+Computing distance matrix with metric=euclidean ...
+Computing CMC and mAP ...
+** Results **
+mAP: 54.0%
+CMC curve
+Rank-1  : 43.0%
+Rank-5  : 0.0%
+Rank-10 : 0.0%
+Rank-20 : 0.0%
+##### Evaluating soccernetv3_test (target) #####
+Extracting features from query set ...
+Done, obtained 11777-by-512 matrix
+Extracting features from gallery set ...
+Done, obtained 34989-by-512 matrix
+Speed: 0.0279 sec/batch
+Computing distance matrix with metric=euclidean ...
+Computing CMC and mAP ...
+** Results **
+mAP: 53.0%
+CMC curve
+Rank-1  : 42.4%
+Rank-5  : 0.0%
+Rank-10 : 0.0%
+Rank-20 : 0.0%
+##### Evaluating soccernetv3_challenge (target) #####
+Extracting features from query set ...
+Done, obtained 9021-by-512 matrix
+Extracting features from gallery set ...
+Done, obtained 26082-by-512 matrix
+Speed: 0.0284 sec/batch
+Computing distance matrix with metric=euclidean ...
+Couldn't compute CMC and mAP because of hidden identity labels.
+Checkpoint saved to "log/optimized_osnet_20250606_040415\model\model.pth.tar-50"
+epoch: [51/60][10/73]	time 0.360 (3.522)	data 0.000 (3.127)	eta 0:42:15	loss_t 0.0274 (0.0071)	loss_x 1.3683 (1.3392)	acc 100.0000 (100.0000)	lr 0.000023
+epoch: [51/60][20/73]	time 0.369 (1.948)	data 0.002 (1.564)	eta 0:23:03	loss_t 0.0000 (0.0043)	loss_x 1.3817 (1.3397)	acc 100.0000 (99.9609)	lr 0.000023
+epoch: [51/60][30/73]	time 0.386 (1.422)	data 0.000 (1.043)	eta 0:16:35	loss_t 0.0000 (0.0045)	loss_x 1.3156 (1.3391)	acc 100.0000 (99.9219)	lr 0.000023
+epoch: [51/60][40/73]	time 0.378 (1.159)	data 0.000 (0.782)	eta 0:13:19	loss_t 0.0102 (0.0077)	loss_x 1.3457 (1.3457)	acc 100.0000 (99.9414)	lr 0.000023
+epoch: [51/60][50/73]	time 0.362 (1.001)	data 0.000 (0.626)	eta 0:11:20	loss_t 0.0492 (0.0106)	loss_x 1.3370 (1.3477)	acc 100.0000 (99.9062)	lr 0.000023
+epoch: [51/60][60/73]	time 0.367 (0.896)	data 0.000 (0.522)	eta 0:10:00	loss_t 0.0000 (0.0110)	loss_x 1.3434 (1.3527)	acc 100.0000 (99.8828)	lr 0.000023
+epoch: [51/60][70/73]	time 0.354 (0.820)	data 0.000 (0.447)	eta 0:09:00	loss_t 0.0000 (0.0107)	loss_x 1.3206 (1.3549)	acc 100.0000 (99.8772)	lr 0.000023
+epoch: [52/60][10/73]	time 0.376 (3.512)	data 0.000 (3.121)	eta 0:37:52	loss_t 0.0000 (0.0001)	loss_x 1.3135 (1.3274)	acc 100.0000 (99.9219)	lr 0.000019
+epoch: [52/60][20/73]	time 0.385 (1.941)	data 0.000 (1.561)	eta 0:20:36	loss_t 0.0020 (0.0049)	loss_x 1.3433 (1.3332)	acc 100.0000 (99.9609)	lr 0.000019
+epoch: [52/60][30/73]	time 0.371 (1.418)	data 0.000 (1.041)	eta 0:14:49	loss_t 0.0048 (0.0124)	loss_x 1.3909 (1.3442)	acc 100.0000 (99.9740)	lr 0.000019
+epoch: [52/60][40/73]	time 0.352 (1.156)	data 0.000 (0.781)	eta 0:11:53	loss_t 0.0071 (0.0142)	loss_x 1.3422 (1.3480)	acc 100.0000 (99.9414)	lr 0.000019
+epoch: [52/60][50/73]	time 0.383 (1.002)	data 0.002 (0.625)	eta 0:10:08	loss_t 0.0159 (0.0177)	loss_x 1.3509 (1.3466)	acc 100.0000 (99.9531)	lr 0.000019
+epoch: [52/60][60/73]	time 0.359 (0.896)	data 0.000 (0.521)	eta 0:08:55	loss_t 0.0000 (0.0188)	loss_x 1.3753 (1.3499)	acc 100.0000 (99.9349)	lr 0.000019
+epoch: [52/60][70/73]	time 0.389 (0.821)	data 0.000 (0.446)	eta 0:08:02	loss_t 0.0000 (0.0164)	loss_x 1.3704 (1.3470)	acc 99.2188 (99.9107)	lr 0.000019
+epoch: [53/60][10/73]	time 0.377 (3.513)	data 0.001 (3.124)	eta 0:33:36	loss_t 0.0304 (0.0120)	loss_x 1.3928 (1.3335)	acc 100.0000 (100.0000)	lr 0.000015
+epoch: [53/60][20/73]	time 0.389 (1.944)	data 0.000 (1.562)	eta 0:18:16	loss_t 0.0109 (0.0071)	loss_x 1.3551 (1.3468)	acc 99.2188 (99.9609)	lr 0.000015
+epoch: [53/60][30/73]	time 0.363 (1.421)	data 0.000 (1.042)	eta 0:13:07	loss_t 0.0000 (0.0078)	loss_x 1.3087 (1.3514)	acc 100.0000 (99.9479)	lr 0.000015
+epoch: [53/60][40/73]	time 0.374 (1.160)	data 0.000 (0.781)	eta 0:10:30	loss_t 0.0000 (0.0083)	loss_x 1.3935 (1.3564)	acc 100.0000 (99.9609)	lr 0.000015
+epoch: [53/60][50/73]	time 0.376 (1.001)	data 0.000 (0.625)	eta 0:08:54	loss_t 0.0000 (0.0101)	loss_x 1.3865 (1.3561)	acc 100.0000 (99.9688)	lr 0.000015
+epoch: [53/60][60/73]	time 0.380 (0.896)	data 0.000 (0.521)	eta 0:07:49	loss_t 0.0085 (0.0088)	loss_x 1.4057 (1.3520)	acc 100.0000 (99.9740)	lr 0.000015
+epoch: [53/60][70/73]	time 0.365 (0.820)	data 0.000 (0.446)	eta 0:07:01	loss_t 0.0018 (0.0093)	loss_x 1.3539 (1.3537)	acc 100.0000 (99.9665)	lr 0.000015
+epoch: [54/60][10/73]	time 0.382 (3.524)	data 0.000 (3.132)	eta 0:29:25	loss_t 0.0115 (0.0055)	loss_x 1.3836 (1.3475)	acc 100.0000 (99.9219)	lr 0.000012
+epoch: [54/60][20/73]	time 0.370 (1.954)	data 0.000 (1.566)	eta 0:15:59	loss_t 0.0000 (0.0047)	loss_x 1.2989 (1.3449)	acc 100.0000 (99.9219)	lr 0.000012
+epoch: [54/60][30/73]	time 0.354 (1.424)	data 0.000 (1.044)	eta 0:11:25	loss_t 0.0000 (0.0056)	loss_x 1.3354 (1.3485)	acc 100.0000 (99.9479)	lr 0.000012
+epoch: [54/60][40/73]	time 0.380 (1.161)	data 0.002 (0.783)	eta 0:09:06	loss_t 0.0000 (0.0066)	loss_x 1.2848 (1.3454)	acc 100.0000 (99.9219)	lr 0.000012
+epoch: [54/60][50/73]	time 0.380 (1.005)	data 0.000 (0.627)	eta 0:07:43	loss_t 0.0000 (0.0065)	loss_x 1.3835 (1.3462)	acc 100.0000 (99.9375)	lr 0.000012
+epoch: [54/60][60/73]	time 0.392 (0.899)	data 0.000 (0.522)	eta 0:06:45	loss_t 0.1089 (0.0073)	loss_x 1.3328 (1.3457)	acc 100.0000 (99.9349)	lr 0.000012
+epoch: [54/60][70/73]	time 0.341 (0.822)	data 0.001 (0.448)	eta 0:06:02	loss_t 0.0000 (0.0075)	loss_x 1.3353 (1.3457)	acc 100.0000 (99.9330)	lr 0.000012
+epoch: [55/60][10/73]	time 0.379 (3.505)	data 0.000 (3.113)	eta 0:25:00	loss_t 0.0420 (0.0201)	loss_x 1.3997 (1.3569)	acc 99.2188 (99.8438)	lr 0.000009
+epoch: [55/60][20/73]	time 0.374 (1.937)	data 0.000 (1.557)	eta 0:13:29	loss_t 0.0094 (0.0129)	loss_x 1.4040 (1.3542)	acc 100.0000 (99.9219)	lr 0.000009
+epoch: [55/60][30/73]	time 0.358 (1.416)	data 0.000 (1.038)	eta 0:09:37	loss_t 0.0000 (0.0089)	loss_x 1.3068 (1.3478)	acc 100.0000 (99.9219)	lr 0.000009
+epoch: [55/60][40/73]	time 0.363 (1.154)	data 0.000 (0.779)	eta 0:07:39	loss_t 0.0181 (0.0082)	loss_x 1.3737 (1.3457)	acc 100.0000 (99.9414)	lr 0.000009
+epoch: [55/60][50/73]	time 0.366 (0.997)	data 0.000 (0.623)	eta 0:06:27	loss_t 0.0000 (0.0091)	loss_x 1.3256 (1.3493)	acc 100.0000 (99.9531)	lr 0.000009
+epoch: [55/60][60/73]	time 0.356 (0.893)	data 0.008 (0.520)	eta 0:05:37	loss_t 0.0000 (0.0115)	loss_x 1.3532 (1.3471)	acc 100.0000 (99.9479)	lr 0.000009
+epoch: [55/60][70/73]	time 0.351 (0.817)	data 0.000 (0.445)	eta 0:05:00	loss_t 0.0317 (0.0112)	loss_x 1.4605 (1.3511)	acc 100.0000 (99.9554)	lr 0.000009
+epoch: [56/60][10/73]	time 0.361 (3.494)	data 0.002 (3.104)	eta 0:20:40	loss_t 0.0080 (0.0132)	loss_x 1.3066 (1.3348)	acc 100.0000 (100.0000)	lr 0.000006
+epoch: [56/60][20/73]	time 0.390 (1.931)	data 0.001 (1.552)	eta 0:11:06	loss_t 0.0000 (0.0110)	loss_x 1.2724 (1.3399)	acc 100.0000 (99.9219)	lr 0.000006
+epoch: [56/60][30/73]	time 0.387 (1.411)	data 0.000 (1.035)	eta 0:07:52	loss_t 0.0000 (0.0140)	loss_x 1.3001 (1.3379)	acc 100.0000 (99.9479)	lr 0.000006
+epoch: [56/60][40/73]	time 0.383 (1.151)	data 0.000 (0.776)	eta 0:06:14	loss_t 0.0040 (0.0114)	loss_x 1.3369 (1.3394)	acc 100.0000 (99.9414)	lr 0.000006
+epoch: [56/60][50/73]	time 0.362 (0.997)	data 0.000 (0.621)	eta 0:05:13	loss_t 0.0000 (0.0111)	loss_x 1.3448 (1.3424)	acc 100.0000 (99.9375)	lr 0.000006
+epoch: [56/60][60/73]	time 0.377 (0.892)	data 0.000 (0.518)	eta 0:04:32	loss_t 0.0000 (0.0146)	loss_x 1.2680 (1.3465)	acc 100.0000 (99.9219)	lr 0.000006
+epoch: [56/60][70/73]	time 0.352 (0.816)	data 0.000 (0.444)	eta 0:04:00	loss_t 0.0671 (0.0152)	loss_x 1.3583 (1.3466)	acc 100.0000 (99.9107)	lr 0.000006
+epoch: [57/60][10/73]	time 0.375 (3.514)	data 0.000 (3.121)	eta 0:16:30	loss_t 0.0127 (0.0131)	loss_x 1.3329 (1.3459)	acc 100.0000 (100.0000)	lr 0.000004
+epoch: [57/60][20/73]	time 0.378 (1.943)	data 0.000 (1.560)	eta 0:08:48	loss_t 0.0641 (0.0185)	loss_x 1.3366 (1.3498)	acc 100.0000 (99.9219)	lr 0.000004
+epoch: [57/60][30/73]	time 0.375 (1.420)	data 0.000 (1.041)	eta 0:06:12	loss_t 0.0401 (0.0140)	loss_x 1.3667 (1.3463)	acc 100.0000 (99.9219)	lr 0.000004
+epoch: [57/60][40/73]	time 0.358 (1.157)	data 0.000 (0.780)	eta 0:04:51	loss_t 0.0000 (0.0148)	loss_x 1.3842 (1.3482)	acc 100.0000 (99.8828)	lr 0.000004
+epoch: [57/60][50/73]	time 0.375 (0.999)	data 0.000 (0.624)	eta 0:04:01	loss_t 0.0000 (0.0149)	loss_x 1.3424 (1.3482)	acc 100.0000 (99.9062)	lr 0.000004
+epoch: [57/60][60/73]	time 0.368 (0.896)	data 0.000 (0.520)	eta 0:03:27	loss_t 0.0000 (0.0137)	loss_x 1.3004 (1.3445)	acc 100.0000 (99.9089)	lr 0.000004
+epoch: [57/60][70/73]	time 0.379 (0.820)	data 0.000 (0.446)	eta 0:03:02	loss_t 0.0000 (0.0136)	loss_x 1.3357 (1.3440)	acc 100.0000 (99.8884)	lr 0.000004
+epoch: [58/60][10/73]	time 0.371 (3.498)	data 0.000 (3.111)	eta 0:12:11	loss_t 0.0000 (0.0066)	loss_x 1.3234 (1.3418)	acc 100.0000 (99.9219)	lr 0.000002
+epoch: [58/60][20/73]	time 0.375 (1.936)	data 0.000 (1.556)	eta 0:06:25	loss_t 0.2141 (0.0165)	loss_x 1.3432 (1.3411)	acc 100.0000 (99.9609)	lr 0.000002
+epoch: [58/60][30/73]	time 0.363 (1.413)	data 0.000 (1.038)	eta 0:04:27	loss_t 0.0000 (0.0125)	loss_x 1.3753 (1.3463)	acc 99.2188 (99.9479)	lr 0.000002
+epoch: [58/60][40/73]	time 0.380 (1.153)	data 0.000 (0.778)	eta 0:03:26	loss_t 0.0065 (0.0113)	loss_x 1.3960 (1.3461)	acc 100.0000 (99.9219)	lr 0.000002
+epoch: [58/60][50/73]	time 0.370 (0.998)	data 0.000 (0.623)	eta 0:02:48	loss_t 0.0000 (0.0106)	loss_x 1.2981 (1.3473)	acc 100.0000 (99.9219)	lr 0.000002
+epoch: [58/60][60/73]	time 0.345 (0.895)	data 0.000 (0.519)	eta 0:02:22	loss_t 0.0000 (0.0112)	loss_x 1.3416 (1.3505)	acc 100.0000 (99.9089)	lr 0.000002
+epoch: [58/60][70/73]	time 0.354 (0.819)	data 0.000 (0.445)	eta 0:02:02	loss_t 0.0000 (0.0105)	loss_x 1.3146 (1.3490)	acc 100.0000 (99.8996)	lr 0.000002
+epoch: [59/60][10/73]	time 0.348 (3.512)	data 0.000 (3.113)	eta 0:07:57	loss_t 0.0225 (0.0046)	loss_x 1.3452 (1.3452)	acc 100.0000 (100.0000)	lr 0.000001
+epoch: [59/60][20/73]	time 0.364 (1.942)	data 0.002 (1.557)	eta 0:04:04	loss_t 0.0000 (0.0078)	loss_x 1.2748 (1.3469)	acc 100.0000 (99.9609)	lr 0.000001
+epoch: [59/60][30/73]	time 0.363 (1.418)	data 0.001 (1.038)	eta 0:02:44	loss_t 0.0000 (0.0079)	loss_x 1.3390 (1.3459)	acc 100.0000 (99.9219)	lr 0.000001
+epoch: [59/60][40/73]	time 0.366 (1.156)	data 0.000 (0.778)	eta 0:02:02	loss_t 0.0019 (0.0073)	loss_x 1.4851 (1.3507)	acc 100.0000 (99.9023)	lr 0.000001
+epoch: [59/60][50/73]	time 0.359 (0.999)	data 0.000 (0.623)	eta 0:01:35	loss_t 0.0000 (0.0109)	loss_x 1.3178 (1.3492)	acc 100.0000 (99.9219)	lr 0.000001
+epoch: [59/60][60/73]	time 0.350 (0.894)	data 0.001 (0.519)	eta 0:01:16	loss_t 0.0125 (0.0110)	loss_x 1.4572 (1.3505)	acc 98.4375 (99.8958)	lr 0.000001
+epoch: [59/60][70/73]	time 0.357 (0.818)	data 0.000 (0.445)	eta 0:01:02	loss_t 0.0082 (0.0097)	loss_x 1.4212 (1.3494)	acc 100.0000 (99.9107)	lr 0.000001
+epoch: [60/60][10/73]	time 0.401 (3.501)	data 0.000 (3.107)	eta 0:03:40	loss_t 0.0000 (0.0186)	loss_x 1.3055 (1.3450)	acc 100.0000 (99.9219)	lr 0.000000
+epoch: [60/60][20/73]	time 0.370 (1.936)	data 0.001 (1.554)	eta 0:01:42	loss_t 0.0000 (0.0111)	loss_x 1.3072 (1.3478)	acc 100.0000 (99.8438)	lr 0.000000
+epoch: [60/60][30/73]	time 0.373 (1.417)	data 0.000 (1.036)	eta 0:01:00	loss_t 0.0000 (0.0103)	loss_x 1.3187 (1.3519)	acc 100.0000 (99.8438)	lr 0.000000
+epoch: [60/60][40/73]	time 0.378 (1.156)	data 0.002 (0.777)	eta 0:00:38	loss_t 0.0342 (0.0120)	loss_x 1.3604 (1.3471)	acc 100.0000 (99.8828)	lr 0.000000
+epoch: [60/60][50/73]	time 0.378 (0.999)	data 0.001 (0.622)	eta 0:00:22	loss_t 0.0068 (0.0101)	loss_x 1.3216 (1.3462)	acc 100.0000 (99.8906)	lr 0.000000
+epoch: [60/60][60/73]	time 0.353 (0.893)	data 0.000 (0.518)	eta 0:00:11	loss_t 0.0000 (0.0114)	loss_x 1.3549 (1.3451)	acc 100.0000 (99.9089)	lr 0.000000
+epoch: [60/60][70/73]	time 0.359 (0.819)	data 0.000 (0.444)	eta 0:00:02	loss_t 0.0000 (0.0099)	loss_x 1.3917 (1.3452)	acc 100.0000 (99.9219)	lr 0.000000
+=> Final test
+##### Evaluating soccernetv3 (source) #####
+Extracting features from query set ...
+Done, obtained 11638-by-512 matrix
+Extracting features from gallery set ...
+Done, obtained 34355-by-512 matrix
+Speed: 0.0288 sec/batch
+Computing distance matrix with metric=euclidean ...
+Exporting ranking results to 'log/optimized_osnet_20250606_040415\ranking_results_soccernetv3_2025-06-06_05_33_46_620.json' for external evaluation...
+Computing CMC and mAP ...
+** Results **
+mAP: 54.2%
+CMC curve
+Rank-1  : 43.5%
+Rank-5  : 0.0%
+Rank-10 : 0.0%
+Rank-20 : 0.0%
+##### Evaluating soccernetv3_test (target) #####
+Extracting features from query set ...
+Done, obtained 11777-by-512 matrix
+Extracting features from gallery set ...
+Done, obtained 34989-by-512 matrix
+Speed: 0.0276 sec/batch
+Computing distance matrix with metric=euclidean ...
+Exporting ranking results to 'log/optimized_osnet_20250606_040415\ranking_results_soccernetv3_test_2025-06-06_05_36_22_603.json' for external evaluation...
+Computing CMC and mAP ...
+** Results **
+mAP: 53.2%
+CMC curve
+Rank-1  : 42.6%
+Rank-5  : 0.0%
+Rank-10 : 0.0%
+Rank-20 : 0.0%
+##### Evaluating soccernetv3_challenge (target) #####
+Extracting features from query set ...
+Done, obtained 9021-by-512 matrix
+Extracting features from gallery set ...
+Done, obtained 26082-by-512 matrix
+Speed: 0.0286 sec/batch
+Computing distance matrix with metric=euclidean ...
+Exporting ranking results to 'log/optimized_osnet_20250606_040415\ranking_results_soccernetv3_challenge_2025-06-06_05_38_22_450.json' for external evaluation...
+Couldn't compute CMC and mAP because of hidden identity labels.
+Checkpoint saved to "log/optimized_osnet_20250606_040415\model\model.pth.tar-60"
+Elapsed 1:33:42

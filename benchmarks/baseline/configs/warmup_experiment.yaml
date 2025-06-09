@@ -1,0 +1,48 @@
+# Warmup experiment - addresses learning rate issues
+# Uses warmup + cosine scheduling for better convergence
+
+model:
+  name: 'osnet_x1_0'
+
+data:
+  type: 'image'
+  root: 'datasets'
+  height: 256
+  width: 128
+  workers: 8
+  transforms: ['random_flip', 'random_crop', 'color_jitter', 'random_erase']
+  sources: ['soccernetv3']
+  targets: ['soccernetv3', 'soccernetv3_test', 'soccernetv3_challenge']
+
+soccernetv3:
+  training_subset: 0.01
+
+sampler:
+  train_sampler: RandomIdentitySampler
+  train_sampler_t: RandomIdentitySampler
+  num_instances: 4
+
+loss:
+  name: 'triplet'
+  softmax:
+    label_smooth: True
+  triplet:
+    margin: 0.4  # Moderate margin
+    weight_t: 0.6
+    weight_x: 0.4
+
+train:
+  batch_size: 64  # Smaller batch for more updates
+  print_freq: 10
+  max_epoch: 60
+  lr: 0.00035
+  weight_decay: 5e-4
+  # Warmup settings
+  warmup_factor: 0.01
+  warmup_iters: 500
+  lr_scheduler: 'cosine'
+
+test:
+  ranks: [1, 5, 10, 20]
+  export_ranking_results: True
+  eval_freq: 5  # More frequent evaluation

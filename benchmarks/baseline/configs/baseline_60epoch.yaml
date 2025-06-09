@@ -1,0 +1,43 @@
+# Enhanced baseline configuration for 60 epochs (sn-reid standard)
+# Based on baseline_config.yaml but with full training time
+
+model:
+  name: 'resnet50_fc512'
+
+data:
+  type: 'image'
+  root: 'datasets'
+  height: 256
+  width: 128
+  workers: 8  # Increased for better performance
+  sources: ['soccernetv3']
+  targets: ['soccernetv3', 'soccernetv3_test', 'soccernetv3_challenge']
+
+soccernetv3:
+  training_subset: 0.01 # 1% for faster training
+
+sampler:
+  train_sampler: RandomIdentitySampler
+  train_sampler_t: RandomIdentitySampler
+  num_instances: 4
+
+loss:
+  name: 'triplet'
+  softmax:
+    label_smooth: True
+  triplet:
+    margin: 0.3
+    weight_t: 0.5
+    weight_x: 0.5
+
+train:
+  batch_size: 128  # Increased for better GPU utilization
+  print_freq: 10
+  max_epoch: 60  # Standard sn-reid epochs
+  lr: 0.0003
+  weight_decay: 5e-4
+
+test:
+  ranks: [1, 5, 10, 20]
+  export_ranking_results: True
+  eval_freq: 10  # Evaluate every 10 epochs

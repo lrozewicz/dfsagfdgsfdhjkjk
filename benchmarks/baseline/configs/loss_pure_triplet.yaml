@@ -1,0 +1,43 @@
+# Loss function experiment: Pure Triplet Loss
+# Only triplet loss without cross-entropy component
+
+model:
+  name: 'resnet50_fc512'
+
+data:
+  type: 'image'
+  root: 'datasets'
+  height: 256
+  width: 128
+  workers: 8
+  sources: ['soccernetv3']
+  targets: ['soccernetv3', 'soccernetv3_test', 'soccernetv3_challenge']
+
+soccernetv3:
+  training_subset: 0.01
+
+sampler:
+  train_sampler: RandomIdentitySampler
+  train_sampler_t: RandomIdentitySampler
+  num_instances: 4
+
+loss:
+  name: 'triplet'
+  softmax:
+    label_smooth: True
+  triplet:
+    margin: 0.3
+    weight_t: 1.0  # Pure triplet loss
+    weight_x: 0.0  # No cross-entropy
+
+train:
+  batch_size: 128
+  print_freq: 10
+  max_epoch: 60
+  lr: 0.0003
+  weight_decay: 5e-4
+
+test:
+  ranks: [1, 5, 10, 20]
+  export_ranking_results: True
+  eval_freq: 10

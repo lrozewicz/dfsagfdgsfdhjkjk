@@ -1,0 +1,44 @@
+# Hard Mining experiment - Advanced informative sample selection
+# Uses hard negative mining for better triplet selection
+
+model:
+  name: 'osnet_x1_0'
+
+data:
+  type: 'image'
+  root: 'datasets'
+  height: 256
+  width: 128
+  workers: 8
+  transforms: ['random_flip', 'random_crop', 'color_jitter', 'random_erase']
+  sources: ['soccernetv3']
+  targets: ['soccernetv3', 'soccernetv3_test', 'soccernetv3_challenge']
+
+soccernetv3:
+  training_subset: 0.01
+
+sampler:
+  train_sampler: RandomIdentitySampler
+  train_sampler_t: RandomIdentitySampler
+  num_instances: 8  # More instances for better hard mining
+
+loss:
+  name: 'triplet'  # Triplet loss with hard mining approach
+  softmax:
+    label_smooth: True
+  triplet:
+    margin: 0.3
+    weight_t: 0.5  # Balanced triplet weight
+    weight_x: 0.5  # Balanced classification weight
+
+train:
+  batch_size: 64  # Smaller batch for hard mining
+  print_freq: 10
+  max_epoch: 60
+  lr: 0.00035
+  weight_decay: 5e-4
+
+test:
+  ranks: [1, 5, 10, 20]
+  export_ranking_results: True
+  eval_freq: 10

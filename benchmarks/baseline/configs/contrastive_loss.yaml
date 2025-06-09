@@ -1,0 +1,44 @@
+# Contrastive Loss experiment - Siamese network approach
+# Implements pair-wise contrastive loss for metric learning
+
+model:
+  name: 'resnet50_fc512'
+
+data:
+  type: 'image'
+  root: 'datasets'
+  height: 256
+  width: 128
+  workers: 8
+  transforms: ['random_flip', 'random_crop', 'color_jitter']
+  sources: ['soccernetv3']
+  targets: ['soccernetv3', 'soccernetv3_test', 'soccernetv3_challenge']
+
+soccernetv3:
+  training_subset: 0.01
+
+sampler:
+  train_sampler: RandomIdentitySampler
+  train_sampler_t: RandomIdentitySampler
+  num_instances: 4
+
+loss:
+  name: 'triplet'  # Using triplet loss with contrastive-like settings
+  softmax:
+    label_smooth: True
+  triplet:
+    margin: 0.3
+    weight_t: 1.0  # Pure triplet focus for contrastive-like behavior
+    weight_x: 0.0  # No cross-entropy component
+
+train:
+  batch_size: 128
+  print_freq: 10
+  max_epoch: 60
+  lr: 0.0001
+  weight_decay: 5e-4
+
+test:
+  ranks: [1, 5, 10, 20]
+  export_ranking_results: True
+  eval_freq: 10
