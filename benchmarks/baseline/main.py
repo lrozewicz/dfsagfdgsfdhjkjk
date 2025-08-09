@@ -26,7 +26,17 @@ def build_datamanager(cfg):
 
 def build_engine(cfg, datamanager, model, optimizer, scheduler):
     if cfg.data.type == 'image':
-        if cfg.loss.name == 'softmax':
+        # Check if using classification engine
+        if hasattr(cfg, 'engine') and cfg.engine == 'classification':
+            engine = torchreid.engine.ImageClassificationEngine(
+                datamanager,
+                model,
+                optimizer=optimizer,
+                scheduler=scheduler,
+                use_gpu=cfg.use_gpu,
+                label_smooth=cfg.loss.softmax.label_smooth
+            )
+        elif cfg.loss.name == 'softmax':
             engine = torchreid.engine.ImageSoftmaxEngine(
                 datamanager,
                 model,

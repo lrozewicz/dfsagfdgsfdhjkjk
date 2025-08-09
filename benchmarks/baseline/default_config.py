@@ -111,6 +111,9 @@ def get_default_config():
     cfg.test.export_ranking_results = False # export query to gallery ranking results to JSON file in 'data.save_dir' for each
                                     # target dataset. To be used for external evaluation and submission on EvalAI
 
+    # engine configuration
+    cfg.engine = 'default'  # engine type: 'default', 'classification'
+
     return cfg
 
 

@@ -1,5 +1,5 @@
-# Enhanced baseline - conservative improvements
-# Fixes key issues while staying close to original baseline
+# Pure classification approach with ResNet50 (baseline comparison)
+# Trains with only cross-entropy loss, then uses as feature extractor
 
 model:
   name: 'resnet50_fc512'
@@ -10,13 +10,12 @@ data:
   height: 256
   width: 128
   workers: 8
-  # Add basic augmentations
-  transforms: ['random_flip', 'random_crop', 'color_jitter']
   sources: ['soccernetv3']
   targets: ['soccernetv3', 'soccernetv3_test', 'soccernetv3_challenge']
+  save_dir: 'log/classification_resnet50'
 
 soccernetv3:
-  training_subset: 0.01
+  training_subset: 0.01 # 1% for faster training
 
 sampler:
   train_sampler: RandomIdentitySampler
@@ -24,22 +23,22 @@ sampler:
   num_instances: 4
 
 loss:
-  name: 'triplet'
+  name: 'softmax'  # Pure classification - only cross-entropy
   softmax:
     label_smooth: True
-  triplet:
-    margin: 0.5  # Increased from 0.3 for harder mining
-    weight_t: 0.6  # Increased triplet importance
-    weight_x: 0.4  # Decreased softmax weight
 
 train:
   batch_size: 128
   print_freq: 10
   max_epoch: 60
-  lr: 0.0001  # Reduced from 0.0003
-  weight_decay: 5e-4
+  lr: 0.001  # Higher learning rate for classification
+  weight_decay: 1e-4
 
 test:
   ranks: [1, 5, 10, 20]
   export_ranking_results: True
   eval_freq: 10
+  normalize_feature: True
+
+# Engine configuration for pure classification
+engine: 'classification'

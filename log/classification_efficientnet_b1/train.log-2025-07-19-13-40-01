@@ -1,0 +1,237 @@
+Show configuration
+adam:
+  beta1: 0.9
+  beta2: 0.999
+cuhk03:
+  classic_split: False
+  labeled_images: False
+data:
+  combineall: False
+  eval_metric: soccernetv3
+  height: 256
+  k_tfm: 1
+  load_train_targets: False
+  norm_mean: [0.485, 0.456, 0.406]
+  norm_std: [0.229, 0.224, 0.225]
+  root: datasets
+  save_dir: log\classification_efficientnet_b1
+  sources: ['soccernetv3']
+  split_id: 0
+  targets: ['soccernetv3', 'soccernetv3_test', 'soccernetv3_challenge']
+  transforms: ['random_flip']
+  type: image
+  width: 128
+  workers: 8
+engine: classification
+loss:
+  name: softmax
+  softmax:
+    label_smooth: True
+  triplet:
+    margin: 0.3
+    weight_t: 1.0
+    weight_x: 0.0
+market1501:
+  use_500k_distractors: False
+model:
+  load_weights: 
+  name: efficientnet_b1
+  pretrained: True
+  resume: 
+rmsprop:
+  alpha: 0.99
+sampler:
+  num_cams: 1
+  num_datasets: 1
+  num_instances: 4
+  train_sampler: RandomIdentitySampler
+  train_sampler_t: RandomIdentitySampler
+sgd:
+  dampening: 0.0
+  momentum: 0.9
+  nesterov: False
+soccernetv3:
+  training_subset: 0.01
+test:
+  batch_size: 100
+  dist_metric: euclidean
+  eval_freq: 10
+  evaluate: False
+  export_ranking_results: True
+  normalize_feature: True
+  ranks: [1, 5, 10, 20]
+  rerank: False
+  start_eval: 0
+  visrank: False
+  visrank_topk: 10
+train:
+  base_lr_mult: 0.1
+  batch_size: 64
+  fixbase_epoch: 0
+  gamma: 0.1
+  lr: 0.001
+  lr_scheduler: single_step
+  max_epoch: 60
+  new_layers: ['classifier']
+  open_layers: ['classifier']
+  optim: adam
+  print_freq: 10
+  seed: 1
+  staged_lr: False
+  start_epoch: 0
+  stepsize: [20]
+  weight_decay: 0.0001
+use_gpu: True
+video:
+  pooling_method: avg
+  sample_method: evenly
+  seq_len: 15
+
+Collecting env info ...
+** System info **
+PyTorch version: 2.6.0+cu124
+Is debug build: False
+CUDA used to build PyTorch: 12.4
+ROCM used to build PyTorch: N/A
+
+OS: Microsoft Windows 11 Pro (10.0.26100 64-bitowy)
+GCC version: Could not collect
+Clang version: Could not collect
+CMake version: Could not collect
+Libc version: N/A
+
+Python version: 3.11.7 (tags/v3.11.7:fa7a6f2, Dec  4 2023, 19:24:49) [MSC v.1937 64 bit (AMD64)] (64-bit runtime)
+Python platform: Windows-10-10.0.26100-SP0
+Is CUDA available: True
+CUDA runtime version: 12.4.131
+CUDA_MODULE_LOADING set to: LAZY
+GPU models and configuration: GPU 0: NVIDIA GeForce RTX 4070 Ti SUPER
+Nvidia driver version: 572.16
+cuDNN version: Could not collect
+HIP runtime version: N/A
+MIOpen runtime version: N/A
+Is XNNPACK available: True
+
+CPU:
+Name: AMD Ryzen 9 3900X 12-Core Processor            
+Manufacturer: AuthenticAMD
+Family: 107
+Architecture: 9
+ProcessorType: 3
+DeviceID: CPU0
+CurrentClockSpeed: 3793
+MaxClockSpeed: 3793
+L2CacheSize: 6144
+L2CacheSpeed: None
+Revision: 28928
+
+Versions of relevant libraries:
+[pip3] flake8==7.2.0
+[pip3] numpy==2.1.2
+[pip3] torch==2.6.0+cu124
+[pip3] torchaudio==2.6.0+cu124
+[pip3] torchreid==1.4.0
+[pip3] torchvision==0.21.0+cu124
+[conda] Could not collect
+        Pillow (11.0.0)
+
+Building train transforms ...
++ resize to 256x128
++ random flip
++ to torch tensor of range [0, 1]
++ normalization (mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
+Building test transforms ...
++ resize to 256x128
++ to torch tensor of range [0, 1]
++ normalization (mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
+=> Loading train (source) dataset
+SoccerNet valid set was already downloaded and unzipped at C:\praca\lucaswebart\apps\2025\nauka\eksperymenty\praca-dyplomowa\soccer-maj2025\sn-reid-new\datasets\soccernetv3\reid\valid.
+SoccerNet train set was already downloaded and unzipped at C:\praca\lucaswebart\apps\2025\nauka\eksperymenty\praca-dyplomowa\soccer-maj2025\sn-reid-new\datasets\soccernetv3\reid\train.
+=> Loaded Soccernetv3
+  ----------------------------------------
+  subset   | # ids | # images | # cameras
+  ----------------------------------------
+  train    |  1569 |     2665 |        92
+  query    | 11638 |    11638 |      1751
+  gallery  | 29534 |    34355 |      1751
+  ----------------------------------------
+=> Loading test (target) dataset
+SoccerNet valid set was already downloaded and unzipped at C:\praca\lucaswebart\apps\2025\nauka\eksperymenty\praca-dyplomowa\soccer-maj2025\sn-reid-new\datasets\soccernetv3\reid\valid.
+SoccerNet train set was already downloaded and unzipped at C:\praca\lucaswebart\apps\2025\nauka\eksperymenty\praca-dyplomowa\soccer-maj2025\sn-reid-new\datasets\soccernetv3\reid\train.
+=> Loaded Soccernetv3
+  ----------------------------------------
+  subset   | # ids | # images | # cameras
+  ----------------------------------------
+  train    |  1569 |     2665 |        92
+  query    | 11638 |    11638 |      1751
+  gallery  | 29534 |    34355 |      1751
+  ----------------------------------------
+SoccerNet valid set was already downloaded and unzipped at C:\praca\lucaswebart\apps\2025\nauka\eksperymenty\praca-dyplomowa\soccer-maj2025\sn-reid-new\datasets\soccernetv3\reid\valid.
+SoccerNet train set was already downloaded and unzipped at C:\praca\lucaswebart\apps\2025\nauka\eksperymenty\praca-dyplomowa\soccer-maj2025\sn-reid-new\datasets\soccernetv3\reid\train.
+SoccerNet test set was already downloaded and unzipped at C:\praca\lucaswebart\apps\2025\nauka\eksperymenty\praca-dyplomowa\soccer-maj2025\sn-reid-new\datasets\soccernetv3\reid\test.
+=> Loaded Soccernetv3Test
+  ----------------------------------------
+  subset   | # ids | # images | # cameras
+  ----------------------------------------
+  train    |     0 |        0 |         0
+  query    | 11777 |    11777 |      1715
+  gallery  | 30059 |    34989 |      1715
+  ----------------------------------------
+SoccerNet test set was already downloaded and unzipped at C:\praca\lucaswebart\apps\2025\nauka\eksperymenty\praca-dyplomowa\soccer-maj2025\sn-reid-new\datasets\soccernetv3\reid\test.
+SoccerNet challenge set was already downloaded and unzipped at C:\praca\lucaswebart\apps\2025\nauka\eksperymenty\praca-dyplomowa\soccer-maj2025\sn-reid-new\datasets\soccernetv3\reid\challenge.
+=> Loaded Soccernetv3Challenge
+  ----------------------------------------
+  subset   | # ids | # images | # cameras
+  ----------------------------------------
+  train    |     0 |        0 |         0
+  query    |  9021 |     9021 |      1310
+  gallery  | 26082 |    26082 |      1310
+  ----------------------------------------
+SoccerNet challenge set was already downloaded and unzipped at C:\praca\lucaswebart\apps\2025\nauka\eksperymenty\praca-dyplomowa\soccer-maj2025\sn-reid-new\datasets\soccernetv3\reid\challenge.
+
+
+  **************** Summary ****************
+  source            : ['soccernetv3']
+  # source datasets : 1
+  # source ids      : 1569
+  # source images   : 2665
+  # source cameras  : 92
+  target            : ['soccernetv3', 'soccernetv3_test', 'soccernetv3_challenge']
+  *****************************************
+
+
+Building model: efficientnet_b1
+Model complexity: params=6,513,184 flops=371,580,240
+Building softmax-engine for image-reid
+=> Start training
+epoch: [1/60][10/98]	time 0.088 (3.603)	data 0.001 (3.289)	eta 5:52:28	loss 7.6801 (7.5387)	acc 0.0000 (0.0000)	lr 0.001000
+epoch: [1/60][20/98]	time 0.093 (1.846)	data 0.003 (1.645)	eta 3:00:15	loss 7.4397 (7.6548)	acc 0.0000 (0.0000)	lr 0.001000
+epoch: [1/60][30/98]	time 0.097 (1.261)	data 0.001 (1.097)	eta 2:02:57	loss 7.2661 (7.5485)	acc 0.0000 (0.0000)	lr 0.001000
+epoch: [1/60][40/98]	time 0.096 (0.968)	data 0.001 (0.823)	eta 1:34:11	loss 7.8539 (7.5694)	acc 0.0000 (0.0000)	lr 0.001000
+epoch: [1/60][50/98]	time 0.083 (0.792)	data 0.002 (0.659)	eta 1:16:56	loss 7.5505 (7.6084)	acc 0.0000 (0.0000)	lr 0.001000
+epoch: [1/60][60/98]	time 0.089 (0.674)	data 0.001 (0.549)	eta 1:05:25	loss 7.3790 (7.5572)	acc 0.0000 (0.0000)	lr 0.001000
+epoch: [1/60][70/98]	time 0.093 (0.591)	data 0.000 (0.470)	eta 0:57:11	loss 7.8911 (7.5807)	acc 0.0000 (0.0000)	lr 0.001000
+epoch: [1/60][80/98]	time 0.089 (0.528)	data 0.001 (0.412)	eta 0:51:00	loss 7.1328 (7.5813)	acc 0.0000 (0.0000)	lr 0.001000
+epoch: [1/60][90/98]	time 0.100 (0.479)	data 0.001 (0.366)	eta 0:46:11	loss 7.8397 (7.5576)	acc 0.0000 (0.0000)	lr 0.001000
+epoch: [2/60][10/98]	time 0.088 (3.411)	data 0.000 (3.284)	eta 5:28:08	loss 7.2499 (7.4321)	acc 3.1250 (0.7812)	lr 0.001000
+epoch: [2/60][20/98]	time 0.084 (1.749)	data 0.000 (1.642)	eta 2:47:56	loss 7.3129 (7.3960)	acc 0.0000 (0.4688)	lr 0.001000
+epoch: [2/60][30/98]	time 0.088 (1.195)	data 0.000 (1.095)	eta 1:54:34	loss 7.4134 (7.3404)	acc 0.0000 (0.3125)	lr 0.001000
+epoch: [2/60][40/98]	time 0.083 (0.918)	data 0.000 (0.821)	eta 1:27:52	loss 7.1923 (7.3169)	acc 0.0000 (0.2344)	lr 0.001000
+epoch: [2/60][50/98]	time 0.090 (0.752)	data 0.000 (0.657)	eta 1:11:51	loss 7.1620 (7.3024)	acc 0.0000 (0.2500)	lr 0.001000
+epoch: [2/60][60/98]	time 0.085 (0.641)	data 0.000 (0.548)	eta 1:01:09	loss 7.2514 (7.2919)	acc 0.0000 (0.2083)	lr 0.001000
+epoch: [2/60][70/98]	time 0.097 (0.563)	data 0.000 (0.469)	eta 0:53:33	loss 7.0885 (7.2757)	acc 0.0000 (0.2009)	lr 0.001000
+epoch: [2/60][80/98]	time 0.082 (0.504)	data 0.000 (0.411)	eta 0:47:51	loss 7.3023 (7.2642)	acc 0.0000 (0.1758)	lr 0.001000
+epoch: [2/60][90/98]	time 0.084 (0.457)	data 0.000 (0.365)	eta 0:43:22	loss 7.2887 (7.2646)	acc 0.0000 (0.1736)	lr 0.001000
+epoch: [3/60][10/98]	time 0.087 (3.414)	data 0.001 (3.292)	eta 5:22:50	loss 6.4609 (6.2310)	acc 3.1250 (14.3750)	lr 0.001000
+epoch: [3/60][20/98]	time 0.071 (1.751)	data 0.000 (1.646)	eta 2:45:15	loss 6.1444 (6.0904)	acc 3.1250 (13.0469)	lr 0.001000
+epoch: [3/60][30/98]	time 0.090 (1.197)	data 0.001 (1.098)	eta 1:52:47	loss 6.3734 (6.0834)	acc 1.5625 (11.3542)	lr 0.001000
+epoch: [3/60][40/98]	time 0.088 (0.920)	data 0.000 (0.823)	eta 1:26:34	loss 6.2352 (6.1122)	acc 1.5625 (9.3359)	lr 0.001000
+epoch: [3/60][50/98]	time 0.108 (0.754)	data 0.000 (0.659)	eta 1:10:48	loss 6.4483 (6.1515)	acc 0.0000 (7.5938)	lr 0.001000
+epoch: [3/60][60/98]	time 0.086 (0.644)	data 0.000 (0.549)	eta 1:00:20	loss 6.5367 (6.1709)	acc 1.5625 (6.8490)	lr 0.001000
+epoch: [3/60][70/98]	time 0.109 (0.564)	data 0.000 (0.471)	eta 0:52:48	loss 6.0910 (6.1883)	acc 0.0000 (6.1607)	lr 0.001000
+epoch: [3/60][80/98]	time 0.084 (0.505)	data 0.000 (0.412)	eta 0:47:11	loss 6.5620 (6.2088)	acc 0.0000 (5.6445)	lr 0.001000
+epoch: [3/60][90/98]	time 0.083 (0.459)	data 0.000 (0.366)	eta 0:42:47	loss 6.6142 (6.2320)	acc 0.0000 (5.2604)	lr 0.001000
+epoch: [4/60][10/98]	time 0.088 (3.399)	data 0.001 (3.288)	eta 5:15:54	loss 4.7290 (4.5434)	acc 17.1875 (37.1875)	lr 0.001000
+epoch: [4/60][20/98]	time 0.086 (1.742)	data 0.004 (1.645)	eta 2:41:35	loss 4.2073 (4.3575)	acc 32.8125 (36.3281)	lr 0.001000
+epoch: [4/60][30/98]	time 0.089 (1.190)	data 0.000 (1.096)	eta 1:50:11	loss 4.3247 (4.2769)	acc 25.0000 (35.2083)	lr 0.001000
+epoch: [4/60][40/98]	time 0.080 (0.914)	data 0.000 (0.822)	eta 1:24:26	loss 4.6166 (4.3268)	acc 18.7500 (32.5391)	lr 0.001000

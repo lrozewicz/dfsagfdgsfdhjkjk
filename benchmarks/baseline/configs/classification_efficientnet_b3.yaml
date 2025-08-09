@@ -1,0 +1,44 @@
+# Pure classification approach with EfficientNet-B3
+# Trains with only cross-entropy loss, then uses as feature extractor
+
+model:
+  name: 'efficientnet_b3'
+
+data:
+  type: 'image'
+  root: 'datasets'
+  height: 256
+  width: 128
+  workers: 8
+  sources: ['soccernetv3']
+  targets: ['soccernetv3', 'soccernetv3_test', 'soccernetv3_challenge']
+  save_dir: 'log/classification_efficientnet_b3'
+
+soccernetv3:
+  training_subset: 0.01 # 1% for faster training
+
+sampler:
+  train_sampler: RandomIdentitySampler
+  train_sampler_t: RandomIdentitySampler
+  num_instances: 4
+
+loss:
+  name: 'softmax'  # Pure classification - only cross-entropy
+  softmax:
+    label_smooth: True
+
+train:
+  batch_size: 32  # Smaller batch for larger EfficientNet-B3
+  print_freq: 10
+  max_epoch: 60
+  lr: 0.001  # Higher learning rate for classification
+  weight_decay: 1e-4
+
+test:
+  ranks: [1, 5, 10, 20]
+  export_ranking_results: True
+  eval_freq: 10
+  normalize_feature: True
+
+# Engine configuration for pure classification
+engine: 'classification'
