@@ -11,7 +11,7 @@ Ten projekt umożliwia pełną reprodukcję wyników z pracy dyplomowej, zawiera
 - **3 eksperymenty klasyfikacyjne** (pozycje 9, 13-15 w rankingu)
 - **Najlepszy wynik:** 54.7% mAP (OSNet + Hard mining)
 
-## 🎯 Wyniki do Reprodukcji (Tabela 4.11)
+## 🎯 Wyniki do Reprodukcji (z Tabeli 4.4)
 
 | Poz. | Eksperyment | Architektura | mAP (%) | Rank-1 (%) | Podejście |
 |------|-------------|---------------|---------|-------------|-----------|
