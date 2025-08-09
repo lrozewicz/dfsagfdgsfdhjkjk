@@ -313,10 +313,10 @@ train:
 
 Ten framework zapewnia **100% reprodukowalność** eksperymentów z pracy dyplomowej:
 
-✅ **Identyczne środowisko:** Windows 11 + WSL2, CUDA 12.4, PyTorch 2.0+
-✅ **Identyczne dane:** SoccerNet-v3, 1% subset, 248,234 obrazów treningowych
-✅ **Identyczne parametry:** 60 epok, batch sizes, learning rates
-✅ **Identyczne architektury:** ResNet50, OSNet, DenseNet121, EfficientNet-B1/B3
-✅ **Identyczne techniki:** Hard mining, triplet+CE, klasyfikacja
+- ✅ **Identyczne środowisko:** Windows 11 + WSL2, CUDA 12.4, PyTorch 2.0+
+- ✅ **Identyczne dane:** SoccerNet-v3, 1% subset, 248,234 obrazów treningowych
+- ✅ **Identyczne parametry:** 60 epok, batch sizes, learning rates
+- ✅ **Identyczne architektury:** ResNet50, OSNet, DenseNet121, EfficientNet-B1/B3
+- ✅ **Identyczne techniki:** Hard mining, triplet+CE, klasyfikacja
 
 **Wyniki powinny być identyczne (±1% ze względu na randomizację).**
