@@ -38,14 +38,14 @@ Ten projekt umożliwia pełną reprodukcję wyników z pracy dyplomowej, zawiera
 **Minimalne wymagania (zgodne z pracą dyplomową):**
 - **GPU:** NVIDIA RTX 4070 TI Super (16GB VRAM) lub podobna
 - **RAM:** 16GB (zalecane 32GB)
-- **Dysk:** ~100GB wolnego miejsca
+- **Dysk:** ~35GB wolnego miejsca (18GB dataset + 17GB wyniki)
 - **System:** Windows 11 + WSL2 lub Linux
 - **Python:** 3.8+
 - **CUDA:** 12.4
 
 **Czas wykonania:**
 - **Wszystkie 15 eksperymentów:** ~60 godzin (4h × 15)
-- **Dataset download:** ~30 minut (jednorazowo)
+- **Dataset download:** ~60-90 minut (18GB, jednorazowo)
 
 ### 2. Instalacja Środowiska
 
@@ -116,7 +116,7 @@ python run_all_experiments.py
 ```
 
 **Co się dzieje:**
-1. **Automatyczny download:** SoccerNet-v3 dataset (~2-3GB) - jednorazowo
+1. **Automatyczny download:** SoccerNet-v3 dataset (~18GB) - jednorazowo
 2. **15 eksperymentów:** Uruchamianych sekwencyjnie w kolejności rankingu
 3. **Czas wykonania:** ~60 godzin (4h × 15 eksperymentów)
 4. **Wyniki:** Zapisywane w `log/` z timestampami
