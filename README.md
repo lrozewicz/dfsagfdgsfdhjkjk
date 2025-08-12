@@ -269,14 +269,14 @@ grep -A 15 "Evaluating soccernetv3 (source)" log/hard_mining_osnet_*/train.log-*
 
 **Różnice między eksperymentami:**
 ```yaml
-# Uczenie metryki (12 eksperymentów)
+# Uczenie metryki (11 eksperymentów)
 loss:
   name: triplet  # lub kombinacja triplet + cross-entropy
 batch_size: 128  # ResNet50
 batch_size: 64   # OSNet, DenseNet121
 learning_rate: 0.0003
 
-# Podejście klasyfikacyjne (3 eksperymenty)
+# Podejście klasyfikacyjne (4 eksperymenty)
 engine: classification
 loss:
   name: softmax
