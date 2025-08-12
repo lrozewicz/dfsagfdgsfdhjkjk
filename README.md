@@ -154,11 +154,6 @@ python benchmarks/baseline/main.py \
     --config-file benchmarks/baseline/configs/hard_mining_experiment.yaml \
     data.save_dir log/hard_mining_reproduction
 
-# Baseline eksperyment (52.3% mAP)
-python benchmarks/baseline/main.py \
-    --config-file benchmarks/baseline/configs/baseline_60epoch.yaml \
-    data.save_dir log/baseline_reproduction
-
 # Najlepszy eksperyment klasyfikacyjny (48.1% mAP)
 python benchmarks/baseline/main.py \
     --config-file benchmarks/baseline/configs/classification_efficientnet_b3.yaml \
