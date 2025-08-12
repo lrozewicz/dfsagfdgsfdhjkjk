@@ -183,6 +183,7 @@ datasets/soccernetv3/reid/
 │   ├── query/          # Zapytania testowe
 │   └── gallery/        # Galeria testowa
 └── challenge/          # Zbiór wyzwaniowy
+    ├── query/
     └── gallery/
 ```
 
