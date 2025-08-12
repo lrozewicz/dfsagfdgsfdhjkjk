@@ -7,8 +7,8 @@
 Ten projekt umożliwia pełną reprodukcję wyników z pracy dyplomowej, zawierającej systematyczne porównanie:
 
 - **Uczenie metryki** vs **Podejście klasyfikacyjne**
-- **12 eksperymentów uczenia metryki** (pozycje 1-8, 10-12 w rankingu)
-- **3 eksperymenty klasyfikacyjne** (pozycje 9, 13-15 w rankingu)
+- **11 eksperymentów uczenia metryki** (pozycje 1-8, 10-12 w rankingu)
+- **4 eksperymenty klasyfikacyjne** (pozycje 9, 13-15 w rankingu)
 - **Najlepszy wynik:** 54.7% mAP (OSNet + Hard mining)
 
 ## 🎯 Wyniki do Reprodukcji (z Tabeli 4.4)
